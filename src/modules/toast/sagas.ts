@@ -1,6 +1,5 @@
-import { EventChannel, eventChannel } from 'redux-saga'
-import { call, fork, put, select, take, takeEvery } from 'redux-saga/effects'
-import { ErrorCode, MetaTransactionError } from 'decentraland-transactions'
+import { put, select, takeEvery } from 'redux-saga/effects'
+import { ErrorCode } from '@beland/transactions'
 import {
   renderToast,
   ShowToastAction,
@@ -12,11 +11,6 @@ import {
 } from './actions'
 import { getState } from './selectors'
 import * as cache from './cache'
-import {
-  TransactionEventData,
-  TransactionEventType,
-  transactionEvents
-} from '../wallet/utils'
 import { SWITCH_NETWORK_SUCCESS } from '../wallet/actions'
 import {
   getContractAccountErrorToast,
@@ -25,7 +19,6 @@ import {
 } from './toasts/meta-transactions'
 
 export function* toastSaga() {
-  yield fork(watchMetaTransactionErrors)
   yield takeEvery(SHOW_TOAST, handleShowToast)
   yield takeEvery(HIDE_TOAST, handleHideToast)
   yield takeEvery(SWITCH_NETWORK_SUCCESS, handleSwitchNetworkSuccess)
@@ -46,31 +39,6 @@ function* handleShowToast(action: ShowToastAction) {
 function* handleHideToast(action: HideToastAction) {
   const { id } = action.payload
   cache.remove(id)
-}
-
-export function createMetaTransactionsErrorChannel() {
-  return eventChannel<ErrorCode>(emitter => {
-    function handleError(
-      data: TransactionEventData<TransactionEventType.ERROR>
-    ) {
-      if (data.error instanceof MetaTransactionError) {
-        emitter(data.error.code)
-      }
-    }
-    transactionEvents.on(TransactionEventType.ERROR, handleError)
-    return () =>
-      transactionEvents.removeListener(TransactionEventType.ERROR, handleError)
-  })
-}
-
-export function* watchMetaTransactionErrors() {
-  const channel: EventChannel<ErrorCode> = yield call(
-    createMetaTransactionsErrorChannel
-  )
-  while (true) {
-    const code: ErrorCode = yield take(channel)
-    yield call(handleMetaTransactionError, code)
-  }
 }
 
 export function* handleMetaTransactionError(code: ErrorCode) {

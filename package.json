@@ -1,11 +1,12 @@
 {
   "name": "@beland/dapps",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "dependencies": {
     "@0xsequence/multicall": "^0.25.1",
     "@0xsequence/relayer": "^0.25.1",
     "@beland/connect": "^0.0.1",
     "@beland/schemas": "^0.0.3",
+    "@beland/transactions": "^0.0.5",
     "@types/flat": "0.0.28",
     "@types/uuid": "^3.4.3",
     "axios": "^0.21.1",

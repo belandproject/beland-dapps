@@ -1,5 +1,5 @@
 import { ChainId } from '@beland/schemas/dist/dapps/chain-id'
-import { ContractName } from 'decentraland-transactions'
+import { ContractName } from '@beland/transactions'
 
 export enum AuthorizationType {
   ALLOWANCE = 'allowance',

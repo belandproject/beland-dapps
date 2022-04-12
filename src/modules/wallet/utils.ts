@@ -1,13 +1,10 @@
 import { EventEmitter } from 'events'
-import { PopulatedTransaction, Contract, providers, utils } from 'ethers'
+import { PopulatedTransaction, Contract, providers } from 'ethers'
 import { Eth } from 'web3x/eth'
 import { Address } from 'web3x/address'
 import {
   ContractData,
-  ContractName,
-  getContract,
-  sendMetaTransaction
-} from 'decentraland-transactions'
+} from '@beland/transactions'
 import { ChainId, getChainName } from '@beland/schemas/dist/dapps/chain-id'
 import {
   getConnectedProvider,
@@ -18,25 +15,8 @@ import {
 import { getChainConfiguration } from '../../lib/chainConfiguration'
 import { AddEthereumChainParameters, Networks, Wallet } from './types'
 
-let TRANSACTIONS_API_URL = 'https://transactions-api.decentraland.co/v1'
-export const getTransactionsApiUrl = () => TRANSACTIONS_API_URL
-export const setTransactionsApiUrl = (url: string) =>
-  (TRANSACTIONS_API_URL = url)
-
-export async function fetchManaBalance(chainId: ChainId, address: string) {
-  try {
-    const provider = await getNetworkProvider(chainId)
-    const contract = getContract(ContractName.MANAToken, chainId)
-    const mana = new Contract(
-      contract.address,
-      contract.abi,
-      new providers.Web3Provider(provider)
-    )
-    const balance = await mana.balanceOf(address)
-    return parseFloat(utils.formatEther(balance))
-  } catch (error) {
-    return 0
-  }
+export async function fetchBeanBalance(_chainId: ChainId, _address: string) {
+  return 0
 }
 
 export async function buildWallet(): Promise<Wallet> {
@@ -66,7 +46,7 @@ export async function buildWallet(): Promise<Wallet> {
     const networkChainId = expectedChainConfig.networkMapping[network]
     networks[network] = {
       chainId: networkChainId,
-      mana: await fetchManaBalance(networkChainId, address)
+      mana: await fetchBeanBalance(networkChainId, address)
     }
   }
 
@@ -141,14 +121,7 @@ export async function sendTransaction(...args: any[]) {
     if (!connectedProvider) {
       throw new Error('Provider not connected')
     }
-
-    // get current chain id
-    const chainIdHex = await connectedProvider.request({
-      method: 'eth_chainId',
-      params: []
-    })
-    const chainId = parseInt(chainIdHex as string, 16)
-
+    
     // get a provider for the target network
     const targetNetworkProvider = await getTargetNetworkProvider(
       contract.chainId
@@ -171,26 +144,10 @@ export async function sendTransaction(...args: any[]) {
           contractMethodNameOrGetPopulatedTransaction
         ](...contractArguments))
 
-    // if the connected provider is in the target network, use it to sign and send the tx
-    if (chainId === contract.chainId) {
       const signer = targetNetworkProvider.getSigner()
       const tx = await signer.sendTransaction(unsignedTx)
       transactionEvents.emit(TransactionEventType.SUCCESS, { txHash: tx.hash })
       return tx.hash
-    } else {
-      // otherwise, send it as a meta tx
-      const txHash = await sendMetaTransaction(
-        connectedProvider,
-        targetNetworkProvider,
-        unsignedTx.data!,
-        contract,
-        {
-          serverURL: getTransactionsApiUrl()
-        }
-      )
-      transactionEvents.emit(TransactionEventType.SUCCESS, { txHash })
-      return txHash
-    }
   } catch (error) {
     const data: TransactionEventData<TransactionEventType.ERROR> = {
       type: TransactionEventType.ERROR,
