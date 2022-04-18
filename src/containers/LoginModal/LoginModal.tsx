@@ -5,7 +5,7 @@ import {
   LoginModalI18N,
   LoginModalOptionI18N,
   LoginModalOptionType
-} from 'decentraland-ui/dist/components/LoginModal/LoginModal'
+} from '@beland/uikit/dist/components/LoginModal/LoginModal'
 import { ProviderType } from '@beland/schemas/dist/dapps/provider-type'
 import { T, t } from '../../modules/translation/utils'
 import { DefaultProps, Props, State } from './LoginModal.types'

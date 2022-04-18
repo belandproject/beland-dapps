@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { LoginModalProps } from 'decentraland-ui/dist/components/LoginModal/LoginModal'
+import { LoginModalProps } from '@beland/uikit/dist/components/LoginModal/LoginModal'
 import { ProviderType } from '@beland/schemas/dist/dapps/provider-type'
 import { EnableWalletRequestAction } from '../../modules/wallet/actions'
 

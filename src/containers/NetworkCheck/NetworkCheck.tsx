@@ -1,5 +1,5 @@
 import React from 'react'
-import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
+import { Popup } from '@beland/uikit/dist/components/Popup/Popup'
 import { T } from '../../modules/translation/utils'
 import { getChainIdByNetwork, getConnectedProviderChainId } from '../../lib/eth'
 import { Props } from './NetworkCheck.types'

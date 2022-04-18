@@ -1,0 +1,1 @@
+{"version":3,"file":"ChainProvider.js","sourceRoot":"","sources":["../../../src/containers/ChainProvider/ChainProvider.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;AAAA,kDAAyB;AAIzB,MAAqB,aAAc,SAAQ,eAAK,CAAC,aAAoB;IACnE,MAAM;QACJ,MAAM,KAAwB,IAAI,CAAC,KAAK,EAAlC,EAAE,QAAQ,OAAwB,EAAnB,IAAI,cAAnB,YAAqB,CAAa,CAAA;QACxC,OAAO,QAAQ,CAAC,IAAI,CAAC,CAAA;IACvB,CAAC;CACF;AALD,gCAKC"}

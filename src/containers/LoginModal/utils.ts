@@ -1,5 +1,5 @@
 import { ProviderType } from '@beland/schemas/dist/dapps/provider-type'
-import { LoginModalOptionType } from 'decentraland-ui/dist/components/LoginModal/LoginModal'
+import { LoginModalOptionType } from '@beland/uikit/dist/components/LoginModal/LoginModal'
 import {
   isCoinbaseProvider,
   isCucumberProvider,

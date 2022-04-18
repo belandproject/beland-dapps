@@ -1,0 +1,1 @@
+{"version":3,"file":"ERC20.js","sourceRoot":"","sources":["../../src/contracts/ERC20.ts"],"names":[],"mappings":";;;;;;AAGA,6CAMuB;AAEvB,0DAA4B;AAqG5B,MAAa,KAAM,SAAQ,mBAAyB;IAClD,YAAY,GAAQ,EAAE,OAAiB,EAAE,OAAyB;QAChE,KAAK,CAAC,GAAG,EAAE,kBAAG,EAAE,OAAO,EAAE,OAAO,CAAC,CAAA;IACnC,CAAC;CACF;AAJD,sBAIC;AACU,QAAA,QAAQ,GAAG,kBAAG,CAAA"}
