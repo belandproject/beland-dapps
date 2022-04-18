@@ -24,7 +24,7 @@ function fetchBeanBalance(_chainId, _address) {
 exports.fetchBeanBalance = fetchBeanBalance;
 function buildWallet() {
     return __awaiter(this, void 0, void 0, function* () {
-        const provider = yield eth_2.getConnectedProvider();
+        const provider = yield (0, eth_2.getConnectedProvider)();
         if (!provider) {
             // This could happen if metamask is not installed
             throw new Error('Could not connect to Ethereum');
@@ -37,9 +37,9 @@ function buildWallet() {
         }
         const address = accounts[0].toString();
         const chainId = yield eth.getId();
-        const chainConfig = chainConfiguration_1.getChainConfiguration(chainId);
-        const expectedChainId = eth_2.getConnectedProviderChainId();
-        const expectedChainConfig = chainConfiguration_1.getChainConfiguration(expectedChainId);
+        const chainConfig = (0, chainConfiguration_1.getChainConfiguration)(chainId);
+        const expectedChainId = (0, eth_2.getConnectedProviderChainId)();
+        const expectedChainConfig = (0, chainConfiguration_1.getChainConfiguration)(expectedChainId);
         const networks = {};
         for (const network of Object.keys(expectedChainConfig.networkMapping)) {
             const networkChainId = expectedChainConfig.networkMapping[network];
@@ -50,7 +50,7 @@ function buildWallet() {
         }
         return {
             address: address.toLowerCase(),
-            providerType: eth_2.getConnectedProviderType(),
+            providerType: (0, eth_2.getConnectedProviderType)(),
             networks: networks,
             network: chainConfig.network,
             chainId: expectedChainId
@@ -60,7 +60,7 @@ function buildWallet() {
 exports.buildWallet = buildWallet;
 function getTargetNetworkProvider(chainId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const networkProvider = yield eth_2.getNetworkProvider(chainId);
+        const networkProvider = yield (0, eth_2.getNetworkProvider)(chainId);
         return new ethers_1.providers.Web3Provider(networkProvider);
     });
 }
@@ -76,7 +76,7 @@ function sendTransaction(...args) {
         const [contract, contractMethodNameOrGetPopulatedTransaction, ...contractArguments] = args;
         try {
             // get connected provider
-            const connectedProvider = yield eth_2.getConnectedProvider();
+            const connectedProvider = yield (0, eth_2.getConnectedProvider)();
             if (!connectedProvider) {
                 throw new Error('Provider not connected');
             }
@@ -107,8 +107,8 @@ function sendTransaction(...args) {
 exports.sendTransaction = sendTransaction;
 function getAddEthereumChainParameters(chainId) {
     const hexChainId = '0x' + chainId.toString(16);
-    const chainName = chain_id_1.getChainName(chainId);
-    const config = chainConfiguration_1.getChainConfiguration(chainId);
+    const chainName = (0, chain_id_1.getChainName)(chainId);
+    const config = (0, chainConfiguration_1.getChainConfiguration)(chainId);
     switch (chainId) {
         case chain_id_1.ChainId.KAI_MAINNET:
             return {

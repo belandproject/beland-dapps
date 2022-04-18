@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -29,7 +33,7 @@ class LoginModal extends React.PureComponent {
     constructor(props) {
         super(props);
         this.handleOnConnect = (loginType) => {
-            let providerType = utils_2.toProviderType(loginType);
+            let providerType = (0, utils_2.toProviderType)(loginType);
             this.props.onConnect(providerType);
         };
         this.getModalTranslations = () => {
@@ -59,7 +63,7 @@ class LoginModal extends React.PureComponent {
             if (providerType === provider_type_1.ProviderType.WALLET_LINK) {
                 return null;
             }
-            const loginType = utils_2.toModalOptionType(providerType);
+            const loginType = (0, utils_2.toModalOptionType)(providerType);
             return loginType ? (React.createElement(LoginModal_1.LoginModal.Option, { key: loginType, type: loginType, i18n: this.getOptionTranslations(), onClick: () => this.handleOnConnect(loginType) })) : null;
         };
         this.state = {
@@ -83,7 +87,7 @@ class LoginModal extends React.PureComponent {
         const { hasError } = this.state;
         return (React.createElement(LoginModal_1.LoginModal, { open: open, className: className, i18n: this.getModalTranslations(), message: React.createElement(utils_1.T, { id: "@dapps.login.modal.supported_wallets", values: {
                     br: React.createElement("br", null),
-                    trezor_link: (React.createElement("a", { href: "https://github.com/trezor/trezor-firmware/pull/1568", target: "_blank", rel: "noopener noreferrer" }, utils_1.t('@dapps.login.modal.trezor_link')))
+                    trezor_link: (React.createElement("a", { href: "https://github.com/trezor/trezor-firmware/pull/1568", target: "_blank", rel: "noopener noreferrer" }, (0, utils_1.t)('@dapps.login.modal.trezor_link')))
                 } }), loading: isLoading, hasError: hasError, onClose: onClose }, connect_1.connection.getAvailableProviders().map(this.renderLoginModalOption)));
     }
 }

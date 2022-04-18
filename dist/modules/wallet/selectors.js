@@ -6,41 +6,41 @@ const selectors_1 = require("../loading/selectors");
 const actions_1 = require("./actions");
 const getState = state => state.wallet;
 exports.getState = getState;
-const getData = (state) => exports.getState(state).data;
+const getData = (state) => (0, exports.getState)(state).data;
 exports.getData = getData;
-const getLoading = (state) => exports.getState(state).loading;
+const getLoading = (state) => (0, exports.getState)(state).loading;
 exports.getLoading = getLoading;
-const getError = (state) => exports.getState(state).error;
+const getError = (state) => (0, exports.getState)(state).error;
 exports.getError = getError;
-const isConnected = (state) => exports.getData(state) !== null;
+const isConnected = (state) => (0, exports.getData)(state) !== null;
 exports.isConnected = isConnected;
-const isConnecting = (state) => selectors_1.isLoadingType(exports.getLoading(state), actions_1.CONNECT_WALLET_REQUEST);
+const isConnecting = (state) => (0, selectors_1.isLoadingType)((0, exports.getLoading)(state), actions_1.CONNECT_WALLET_REQUEST);
 exports.isConnecting = isConnecting;
-const isEnabling = (state) => selectors_1.isLoadingType(exports.getLoading(state), actions_1.ENABLE_WALLET_REQUEST);
+const isEnabling = (state) => (0, selectors_1.isLoadingType)((0, exports.getLoading)(state), actions_1.ENABLE_WALLET_REQUEST);
 exports.isEnabling = isEnabling;
-const getAddress = (state) => exports.isConnected(state) ? exports.getData(state).address : undefined;
+const getAddress = (state) => (0, exports.isConnected)(state) ? (0, exports.getData)(state).address : undefined;
 exports.getAddress = getAddress;
-const getChainId = (state) => exports.isConnected(state) ? exports.getData(state).chainId : undefined;
+const getChainId = (state) => (0, exports.isConnected)(state) ? (0, exports.getData)(state).chainId : undefined;
 exports.getChainId = getChainId;
-const getProviderType = (state) => exports.isConnected(state) ? exports.getData(state).providerType : undefined;
+const getProviderType = (state) => (0, exports.isConnected)(state) ? (0, exports.getData)(state).providerType : undefined;
 exports.getProviderType = getProviderType;
-const getNetwork = (state) => exports.isConnected(state) ? exports.getData(state).network : undefined;
+const getNetwork = (state) => (0, exports.isConnected)(state) ? (0, exports.getData)(state).network : undefined;
 exports.getNetwork = getNetwork;
-const getNetworks = (state) => exports.isConnected(state) ? exports.getData(state).networks : undefined;
+const getNetworks = (state) => (0, exports.isConnected)(state) ? (0, exports.getData)(state).networks : undefined;
 exports.getNetworks = getNetworks;
-const hasAcceptedNetworkPartialSupport = (state) => exports.getState(state).hasAcceptedNetworkPartialSupport;
+const hasAcceptedNetworkPartialSupport = (state) => (0, exports.getState)(state).hasAcceptedNetworkPartialSupport;
 exports.hasAcceptedNetworkPartialSupport = hasAcceptedNetworkPartialSupport;
 // Casting as ChainId since it will be initialized at the beginning
-const getAppChainId = (state) => exports.getState(state).appChainId;
+const getAppChainId = (state) => (0, exports.getState)(state).appChainId;
 exports.getAppChainId = getAppChainId;
 /**
  * @deprecated This method is deprecated, it only returns the MANA balance on Ethereum, use getNetworks() to get the MANA balances on all the networks.
  */
 const getMana = (state) => {
-    if (!exports.isConnected(state)) {
+    if (!(0, exports.isConnected)(state)) {
         return undefined;
     }
-    const networks = exports.getNetworks(state);
+    const networks = (0, exports.getNetworks)(state);
     return networks[network_1.Network.ETHEREUM].mana;
 };
 exports.getMana = getMana;

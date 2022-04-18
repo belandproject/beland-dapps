@@ -7,7 +7,7 @@ const react_redux_1 = require("react-redux");
 const selectors_1 = require("../../modules/wallet/selectors");
 const AddressProvider_1 = __importDefault(require("./AddressProvider"));
 const mapState = (state) => ({
-    chainId: selectors_1.getAppChainId(state)
+    chainId: (0, selectors_1.getAppChainId)(state)
 });
-exports.default = react_redux_1.connect(mapState)(AddressProvider_1.default);
+exports.default = (0, react_redux_1.connect)(mapState)(AddressProvider_1.default);
 //# sourceMappingURL=AddressProvider.container.js.map

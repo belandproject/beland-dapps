@@ -17,12 +17,12 @@ function authorizationReducer(state = INITIAL_STATE, action) {
         case actions_2.GRANT_TOKEN_SUCCESS:
         case actions_2.REVOKE_TOKEN_SUCCESS:
         case actions_2.FETCH_AUTHORIZATIONS_REQUEST: {
-            return Object.assign(Object.assign({}, state), { loading: reducer_1.loadingReducer(state.loading, action) });
+            return Object.assign(Object.assign({}, state), { loading: (0, reducer_1.loadingReducer)(state.loading, action) });
         }
         case actions_2.FETCH_AUTHORIZATIONS_SUCCESS: {
             const { authorizations } = action.payload;
             return {
-                loading: reducer_1.loadingReducer(state.loading, action),
+                loading: (0, reducer_1.loadingReducer)(state.loading, action),
                 error: null,
                 data: [...state.data, ...authorizations]
             };
@@ -30,7 +30,7 @@ function authorizationReducer(state = INITIAL_STATE, action) {
         case actions_2.GRANT_TOKEN_FAILURE:
         case actions_2.REVOKE_TOKEN_FAILURE:
         case actions_2.FETCH_AUTHORIZATIONS_FAILURE: {
-            return Object.assign(Object.assign({}, state), { loading: reducer_1.loadingReducer(state.loading, action), error: action.payload.error });
+            return Object.assign(Object.assign({}, state), { loading: (0, reducer_1.loadingReducer)(state.loading, action), error: action.payload.error });
         }
         case actions_1.FETCH_TRANSACTION_SUCCESS: {
             const transaction = action.payload.transaction;
@@ -42,7 +42,7 @@ function authorizationReducer(state = INITIAL_STATE, action) {
                 case actions_2.REVOKE_TOKEN_SUCCESS: {
                     const { authorization } = transaction.payload;
                     return Object.assign(Object.assign({}, state), { data: [
-                            ...state.data.filter(stateAuthorization => !utils_1.areEqual(stateAuthorization, authorization))
+                            ...state.data.filter(stateAuthorization => !(0, utils_1.areEqual)(stateAuthorization, authorization))
                         ] });
                 }
                 default:

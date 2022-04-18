@@ -13,13 +13,13 @@ const mapState = (state, ownProps) => {
     // Wait until the locale is loaded from the storage to select it
     let locale;
     let translations;
-    if (!selectors_1.isLoading(state)) {
+    if (!(0, selectors_1.isLoading)(state)) {
         locale =
-            selectors_2.getLocale(state) ||
-                utils_1.getPreferredLocale(ownProps.locales) ||
+            (0, selectors_2.getLocale)(state) ||
+                (0, utils_1.getPreferredLocale)(ownProps.locales) ||
                 ownProps.locales[0];
         if (locale) {
-            const translationsInState = selectors_2.getData(state)[locale];
+            const translationsInState = (0, selectors_2.getData)(state)[locale];
             if (translationsInState) {
                 translations = translationsInState;
             }
@@ -31,7 +31,7 @@ const mapState = (state, ownProps) => {
     };
 };
 const mapDispatch = (dispatch) => ({
-    onFetchTranslations: (locale) => dispatch(actions_1.fetchTranslationsRequest(locale))
+    onFetchTranslations: (locale) => dispatch((0, actions_1.fetchTranslationsRequest)(locale))
 });
-exports.default = react_redux_1.connect(mapState, mapDispatch)(TranslationProvider_1.default);
+exports.default = (0, react_redux_1.connect)(mapState, mapDispatch)(TranslationProvider_1.default);
 //# sourceMappingURL=TranslationProvider.container.js.map

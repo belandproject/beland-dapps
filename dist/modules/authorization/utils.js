@@ -4,9 +4,9 @@ exports.isValidType = exports.areEqual = exports.hasAuthorization = exports.getT
 const utils_1 = require("web3x/utils");
 const types_1 = require("./types");
 function getTokenAmountToApprove() {
-    return utils_1.toBN(2)
-        .pow(utils_1.toBN(256))
-        .sub(utils_1.toBN(1));
+    return (0, utils_1.toBN)(2)
+        .pow((0, utils_1.toBN)(256))
+        .sub((0, utils_1.toBN)(1));
 }
 exports.getTokenAmountToApprove = getTokenAmountToApprove;
 function hasAuthorization(authorizations, authorizationToFind) {

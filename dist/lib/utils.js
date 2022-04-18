@@ -47,21 +47,21 @@ function toObjectByKey(values, currentValues = {}, key) {
 }
 exports.toObjectByKey = toObjectByKey;
 function distanceInWordsToNow(date, addSuffix = true) {
-    return distance_in_words_to_now_1.default(date, {
+    return (0, distance_in_words_to_now_1.default)(date, {
         addSuffix,
-        locale: utils_1.getCurrentLocale()
+        locale: (0, utils_1.getCurrentLocale)()
     });
 }
 exports.distanceInWordsToNow = distanceInWordsToNow;
 function formatDate(date, format = 'MMMM Do, YYYY') {
-    return format_1.default(date, format, {
-        locale: utils_1.getCurrentLocale()
+    return (0, format_1.default)(date, format, {
+        locale: (0, utils_1.getCurrentLocale)()
     });
 }
 exports.formatDate = formatDate;
 function formatDateTime(date, format = 'MMMM Do, YYYY - hh:mm aa') {
-    return format_1.default(date, format, {
-        locale: utils_1.getCurrentLocale()
+    return (0, format_1.default)(date, format, {
+        locale: (0, utils_1.getCurrentLocale)()
     });
 }
 exports.formatDateTime = formatDateTime;

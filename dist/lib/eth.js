@@ -59,7 +59,7 @@ function getConnectedProviderChainId() {
 exports.getConnectedProviderChainId = getConnectedProviderChainId;
 function isCucumberProvider() {
     const provider = window.ethereum;
-    return utils_1.isMobile() && !!provider && !!provider.isCucumber;
+    return (0, utils_1.isMobile)() && !!provider && !!provider.isCucumber;
 }
 exports.isCucumberProvider = isCucumberProvider;
 function isDapperProvider() {
@@ -81,7 +81,7 @@ function getChainIdByNetwork(network) {
     if (!connectedChainId) {
         throw new Error('Could not get connected provider chain id');
     }
-    const config = chainConfiguration_1.getChainConfiguration(connectedChainId);
+    const config = (0, chainConfiguration_1.getChainConfiguration)(connectedChainId);
     return config.networkMapping[network];
 }
 exports.getChainIdByNetwork = getChainIdByNetwork;
