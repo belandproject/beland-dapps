@@ -11,23 +11,23 @@ function createProfileSaga({ peerUrl }) {
     const peerApi = new peer_1.PeerAPI(peerUrl);
     const entities = new entities_1.EntitesOperator(peerUrl);
     function* profileSaga() {
-        yield (0, effects_1.takeEvery)(actions_2.LOAD_PROFILE_REQUEST, handleLoadProfileRequest);
-        yield (0, effects_1.takeEvery)(actions_2.SET_PROFILE_AVATAR_DESCRIPTION_REQUEST, handleSetProfileDescription);
-        yield (0, effects_1.takeLatest)(actions_1.CONNECT_WALLET_SUCCESS, handleWallet);
-        yield (0, effects_1.takeLatest)(actions_1.CHANGE_ACCOUNT, handleWallet);
+        yield effects_1.takeEvery(actions_2.LOAD_PROFILE_REQUEST, handleLoadProfileRequest);
+        yield effects_1.takeEvery(actions_2.SET_PROFILE_AVATAR_DESCRIPTION_REQUEST, handleSetProfileDescription);
+        yield effects_1.takeLatest(actions_1.CONNECT_WALLET_SUCCESS, handleWallet);
+        yield effects_1.takeLatest(actions_1.CHANGE_ACCOUNT, handleWallet);
     }
     function* handleLoadProfileRequest(action) {
         const { address } = action.payload;
         try {
-            const profile = yield (0, effects_1.call)([peerApi, 'fetchProfile'], address);
-            yield (0, effects_1.put)((0, actions_2.loadProfileSuccess)(address, profile));
+            const profile = yield effects_1.call([peerApi, 'fetchProfile'], address);
+            yield effects_1.put(actions_2.loadProfileSuccess(address, profile));
         }
         catch (error) {
-            yield (0, effects_1.put)((0, actions_2.loadProfileFailure)(address, error.message));
+            yield effects_1.put(actions_2.loadProfileFailure(address, error.message));
         }
     }
     function* handleWallet(action) {
-        yield (0, effects_1.put)((0, actions_2.loadProfileRequest)(action.payload.wallet.address));
+        yield effects_1.put(actions_2.loadProfileRequest(action.payload.wallet.address));
     }
     /**
      * Handles the action to set the description of a user's profile.
@@ -40,15 +40,15 @@ function createProfileSaga({ peerUrl }) {
     function* handleSetProfileDescription(action) {
         try {
             const { address, description } = action.payload;
-            const entity = yield (0, effects_1.call)([entities, 'getProfileEntity'], address);
+            const entity = yield effects_1.call([entities, 'getProfileEntity'], address);
             // Does a profile always have an avatar?
             const newAvatar = Object.assign(Object.assign({}, entity.metadata.avatars[0]), { version: entity.metadata.avatars[0].version + 1, description: description });
             const newEntity = Object.assign(Object.assign({}, entity), { metadata: Object.assign(Object.assign({}, entity.metadata), { avatars: [newAvatar, ...entity.metadata.avatars.slice(1)] }) });
-            yield (0, effects_1.call)([entities, 'deployEntityWithoutNewFiles'], newEntity, types_1.EntityType.PROFILE, action.payload.address);
-            yield (0, effects_1.put)((0, actions_2.setProfileAvatarDescriptionSuccess)(action.payload.address, newAvatar.description, newAvatar.version));
+            yield effects_1.call([entities, 'deployEntityWithoutNewFiles'], newEntity, types_1.EntityType.PROFILE, action.payload.address);
+            yield effects_1.put(actions_2.setProfileAvatarDescriptionSuccess(action.payload.address, newAvatar.description, newAvatar.version));
         }
         catch (error) {
-            yield (0, effects_1.put)((0, actions_2.setProfileAvatarDescriptionFailure)(action.payload.address, error.message));
+            yield effects_1.put(actions_2.setProfileAvatarDescriptionFailure(action.payload.address, error.message));
         }
     }
     return profileSaga;

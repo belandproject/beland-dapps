@@ -47,7 +47,7 @@ class EntitesOperator {
      */
     authenticateEntityDeployment(address, entityId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const provider = yield (0, eth_2.getConnectedProvider)();
+            const provider = yield eth_2.getConnectedProvider();
             if (!provider)
                 throw new Error("The provider couldn't be retrieved when creating the auth chain");
             const eth = new eth_1.Eth(provider);

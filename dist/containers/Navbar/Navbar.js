@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -60,7 +56,7 @@ class Navbar extends React.PureComponent {
             };
         };
         this.handleSwitchNetwork = () => {
-            this.props.onSwitchNetwork((0, eth_1.getConnectedProviderChainId)());
+            this.props.onSwitchNetwork(eth_1.getConnectedProviderChainId());
         };
         this.handleSignOut = () => {
             this.props.onSignOut();
@@ -68,26 +64,26 @@ class Navbar extends React.PureComponent {
     }
     render() {
         const { hasAcceptedNetworkPartialSupport, onAcceptNetworkPartialSupport } = this.props;
-        const expectedChainName = (0, chain_id_1.getChainName)((0, eth_1.getConnectedProviderChainId)());
-        const providerType = (0, eth_1.getConnectedProviderType)();
+        const expectedChainName = chain_id_1.getChainName(eth_1.getConnectedProviderChainId());
+        const providerType = eth_1.getConnectedProviderType();
         return (React.createElement(React.Fragment, null,
             React.createElement(Navbar_1.Navbar, Object.assign({}, this.props, { i18n: this.getTranslations() })),
             React.createElement(ChainProvider_1.default, null, ({ chainId, isUnsupported, isPartiallySupported }) => isUnsupported ? (React.createElement(Modal_1.default, { open: true, size: "tiny" },
                 React.createElement(ModalNavigation_1.ModalNavigation, { title: React.createElement(utils_1.T, { id: "@dapps.navbar.wrong_network.header" }) }),
-                React.createElement(Modal_1.default.Content, null, !(0, chain_id_1.getChainName)(chainId) ? (React.createElement(utils_1.T, { id: "@dapps.navbar.wrong_network.message_unknown_network", values: {
+                React.createElement(Modal_1.default.Content, null, !chain_id_1.getChainName(chainId) ? (React.createElement(utils_1.T, { id: "@dapps.navbar.wrong_network.message_unknown_network", values: {
                         expectedChainName: React.createElement("b", null, expectedChainName)
                     } })) : (React.createElement(utils_1.T, { id: "@dapps.navbar.wrong_network.message", values: {
-                        currentChainName: React.createElement("b", null, (0, chain_id_1.getChainName)(chainId)),
+                        currentChainName: React.createElement("b", null, chain_id_1.getChainName(chainId)),
                         expectedChainName: React.createElement("b", null, expectedChainName)
                     } }))),
-                React.createElement(Modal_1.default.Actions, null, providerType === provider_type_1.ProviderType.WALLET_CONNECT ? (React.createElement(Button_1.Button, { primary: true, onClick: this.handleSignOut }, (0, utils_1.t)('@dapps.navbar.wrong_network.sign_out'))) : (React.createElement(Button_1.Button, { primary: true, onClick: this.handleSwitchNetwork },
+                React.createElement(Modal_1.default.Actions, null, providerType === provider_type_1.ProviderType.WALLET_CONNECT ? (React.createElement(Button_1.Button, { primary: true, onClick: this.handleSignOut }, utils_1.t('@dapps.navbar.wrong_network.sign_out'))) : (React.createElement(Button_1.Button, { primary: true, onClick: this.handleSwitchNetwork },
                     React.createElement(utils_1.T, { id: "@dapps.navbar.wrong_network.switch_button", values: {
                             chainName: React.createElement("b", null, expectedChainName)
                         } })))))) : isPartiallySupported ? (React.createElement(Modal_1.default, { open: !hasAcceptedNetworkPartialSupport, size: "small" },
                 React.createElement(ModalNavigation_1.ModalNavigation, { title: React.createElement(utils_1.T, { id: "@dapps.navbar.partially_supported_network.header" }) }),
                 React.createElement(Modal_1.default.Content, null,
                     React.createElement(utils_1.T, { id: "@dapps.navbar.partially_supported_network.message", values: {
-                            currentChainName: React.createElement("b", null, (0, chain_id_1.getChainName)(chainId)),
+                            currentChainName: React.createElement("b", null, chain_id_1.getChainName(chainId)),
                             expectedChainName: React.createElement("b", null, expectedChainName)
                         } })),
                 React.createElement(Modal_1.default.Actions, null,
@@ -97,7 +93,7 @@ class Navbar extends React.PureComponent {
                             } })),
                     React.createElement(Button_1.Button, { secondary: true, onClick: onAcceptNetworkPartialSupport },
                         React.createElement(utils_1.T, { id: "@dapps.navbar.partially_supported_network.continue_button", values: {
-                                chainName: React.createElement("b", null, (0, chain_id_1.getChainName)(chainId))
+                                chainName: React.createElement("b", null, chain_id_1.getChainName(chainId))
                             } }))))) : null)));
     }
 }

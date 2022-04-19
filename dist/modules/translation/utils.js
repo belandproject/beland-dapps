@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mergeTranslations = exports.T = exports.t = exports.getCurrentLocale = exports.setCurrentLocale = exports.getPreferredLocale = exports.I18nProvider = void 0;
 const react_intl_1 = require("react-intl");
-const cache = (0, react_intl_1.createIntlCache)();
+const cache = react_intl_1.createIntlCache();
 let currentLocale;
 exports.I18nProvider = react_intl_1.IntlProvider;
 function getPreferredLocale(availableLocales) {
@@ -27,7 +27,7 @@ function setCurrentLocale(localeName, messages) {
         zh: 'zh-CN',
         ja: 'ja-JP'
     }[localeName];
-    currentLocale = (0, react_intl_1.createIntl)({ locale, messages }, cache);
+    currentLocale = react_intl_1.createIntl({ locale, messages }, cache);
 }
 exports.setCurrentLocale = setCurrentLocale;
 function getCurrentLocale() {

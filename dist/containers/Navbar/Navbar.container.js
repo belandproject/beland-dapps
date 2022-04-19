@@ -9,19 +9,19 @@ const selectors_2 = require("../../modules/translation/selectors");
 const actions_1 = require("../../modules/wallet/actions");
 const Navbar_1 = __importDefault(require("./Navbar"));
 const mapState = (state) => ({
-    chainId: (0, selectors_1.getChainId)(state),
-    mana: (0, selectors_1.getMana)(state),
-    address: (0, selectors_1.getAddress)(state),
-    isConnected: (0, selectors_1.isConnected)(state),
-    isConnecting: (0, selectors_1.isConnecting)(state),
-    hasTranslations: (0, selectors_2.isEnabled)(state),
-    hasAcceptedNetworkPartialSupport: (0, selectors_1.hasAcceptedNetworkPartialSupport)(state)
+    chainId: selectors_1.getChainId(state),
+    mana: selectors_1.getMana(state),
+    address: selectors_1.getAddress(state),
+    isConnected: selectors_1.isConnected(state),
+    isConnecting: selectors_1.isConnecting(state),
+    hasTranslations: selectors_2.isEnabled(state),
+    hasAcceptedNetworkPartialSupport: selectors_1.hasAcceptedNetworkPartialSupport(state)
 });
 const mapDispatch = (dispatch) => ({
-    onSwitchNetwork: chainId => dispatch((0, actions_1.switchNetworkRequest)(chainId)),
-    onSignOut: () => dispatch((0, actions_1.disconnectWallet)()),
-    onAcceptNetworkPartialSupport: () => dispatch((0, actions_1.acceptNetworkPartialSupport)())
+    onSwitchNetwork: chainId => dispatch(actions_1.switchNetworkRequest(chainId)),
+    onSignOut: () => dispatch(actions_1.disconnectWallet()),
+    onAcceptNetworkPartialSupport: () => dispatch(actions_1.acceptNetworkPartialSupport())
 });
 const mergeProps = (stateProps, dispatchProps, ownProps) => (Object.assign(Object.assign(Object.assign({}, stateProps), dispatchProps), ownProps));
-exports.default = (0, react_redux_1.connect)(mapState, mapDispatch, mergeProps)(Navbar_1.default);
+exports.default = react_redux_1.connect(mapState, mapDispatch, mergeProps)(Navbar_1.default);
 //# sourceMappingURL=Navbar.container.js.map

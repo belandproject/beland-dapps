@@ -8,10 +8,10 @@ const selectors_1 = require("../../modules/modal/selectors");
 const actions_1 = require("../../modules/modal/actions");
 const ModalProvider_1 = __importDefault(require("./ModalProvider"));
 const mapState = (state) => ({
-    modals: (0, selectors_1.getState)(state)
+    modals: selectors_1.getState(state)
 });
 const mapDispatch = (dispatch) => ({
-    onClose: (name) => dispatch((0, actions_1.closeModal)(name))
+    onClose: (name) => dispatch(actions_1.closeModal(name))
 });
-exports.default = (0, react_redux_1.connect)(mapState, mapDispatch)(ModalProvider_1.default);
+exports.default = react_redux_1.connect(mapState, mapDispatch)(ModalProvider_1.default);
 //# sourceMappingURL=ModalProvider.container.js.map

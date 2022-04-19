@@ -4,7 +4,7 @@
   "dependencies": {
     "@0xsequence/multicall": "^0.25.1",
     "@0xsequence/relayer": "^0.25.1",
-    "@beland/connect": "^0.0.1",
+    "@beland/connect": "github:belandproject/beland-connect",
     "@beland/schemas": "^0.0.3",
     "@beland/transactions": "^0.0.5",
     "@beland/uikit": "github:belandproject/beland-ui",

@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -38,7 +34,7 @@ function createTranslationSaga({ getTranslation, translations }) {
             const { locale } = action.payload;
             let result;
             if (getTranslation) {
-                result = yield (0, effects_1.call)(() => getTranslation(locale));
+                result = yield effects_1.call(() => getTranslation(locale));
             }
             else if (translations) {
                 result = translations[locale];
@@ -47,16 +43,16 @@ function createTranslationSaga({ getTranslation, translations }) {
                 throw new Error('You must provide `translations` or `getTranslations`');
             }
             // merge translations and defaults
-            const allTransalations = (0, utils_1.mergeTranslations)((0, flat_1.default)(defaultTranslations[locale]), (0, flat_1.default)(result));
-            (0, utils_1.setCurrentLocale)(locale, allTransalations);
-            yield (0, effects_1.put)((0, actions_1.fetchTranslationsSuccess)(locale, allTransalations));
+            const allTransalations = utils_1.mergeTranslations(flat_1.default(defaultTranslations[locale]), flat_1.default(result));
+            utils_1.setCurrentLocale(locale, allTransalations);
+            yield effects_1.put(actions_1.fetchTranslationsSuccess(locale, allTransalations));
         }
         catch (error) {
-            yield (0, effects_1.put)((0, actions_1.fetchTranslationsFailure)(error.message));
+            yield effects_1.put(actions_1.fetchTranslationsFailure(error.message));
         }
     }
     return function* translationSaga() {
-        yield (0, effects_1.takeEvery)(actions_1.FETCH_TRANSLATIONS_REQUEST, handleFetchTranslationsRequest);
+        yield effects_1.takeEvery(actions_1.FETCH_TRANSLATIONS_REQUEST, handleFetchTranslationsRequest);
     };
 }
 exports.createTranslationSaga = createTranslationSaga;

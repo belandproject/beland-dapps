@@ -6,14 +6,14 @@ const typesafe_actions_1 = require("typesafe-actions");
 exports.FETCH_TRANSLATIONS_REQUEST = '[Request] Fetch Translations';
 exports.FETCH_TRANSLATIONS_SUCCESS = '[Success] Fetch Translations';
 exports.FETCH_TRANSLATIONS_FAILURE = '[Failure] Fetch Translations';
-const fetchTranslationsRequest = (locale) => (0, typesafe_actions_1.action)(exports.FETCH_TRANSLATIONS_REQUEST, { locale });
+const fetchTranslationsRequest = (locale) => typesafe_actions_1.action(exports.FETCH_TRANSLATIONS_REQUEST, { locale });
 exports.fetchTranslationsRequest = fetchTranslationsRequest;
-const fetchTranslationsSuccess = (locale, translations) => (0, typesafe_actions_1.action)(exports.FETCH_TRANSLATIONS_SUCCESS, { locale, translations });
+const fetchTranslationsSuccess = (locale, translations) => typesafe_actions_1.action(exports.FETCH_TRANSLATIONS_SUCCESS, { locale, translations });
 exports.fetchTranslationsSuccess = fetchTranslationsSuccess;
-const fetchTranslationsFailure = (error) => (0, typesafe_actions_1.action)(exports.FETCH_TRANSLATIONS_FAILURE, { error });
+const fetchTranslationsFailure = (error) => typesafe_actions_1.action(exports.FETCH_TRANSLATIONS_FAILURE, { error });
 exports.fetchTranslationsFailure = fetchTranslationsFailure;
 // Change locale
 exports.CHANGE_LOCALE = 'Change locale';
-const changeLocale = (locale) => (0, typesafe_actions_1.action)(exports.CHANGE_LOCALE, { locale });
+const changeLocale = (locale) => typesafe_actions_1.action(exports.CHANGE_LOCALE, { locale });
 exports.changeLocale = changeLocale;
 //# sourceMappingURL=actions.js.map

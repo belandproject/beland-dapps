@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -38,13 +34,13 @@ const actions_3 = require("../transaction/actions");
 const disabledLoad = (store) => setTimeout(() => store.dispatch({ type: actions_1.STORAGE_LOAD, payload: {} }));
 function createStorageMiddleware(options) {
     const { storageKey, migrations = {}, paths = [], actions = [] } = options;
-    if (!(0, localStorage_1.hasLocalStorage)()) {
+    if (!localStorage_1.hasLocalStorage()) {
         return {
             storageMiddleware: disabledMiddleware_1.disabledMiddleware,
             loadStorageMiddleware: disabledLoad
         };
     }
-    const localStorageState = (0, localStorage_1.migrateStorage)(storageKey, migrations);
+    const localStorageState = localStorage_1.migrateStorage(storageKey, migrations);
     let setItemFailure = false;
     try {
         localStorage.setItem(storageKey, JSON.stringify(localStorageState));
@@ -53,7 +49,7 @@ function createStorageMiddleware(options) {
         setItemFailure = true;
         console.warn(e.message);
     }
-    const storageEngine = (0, redux_storage_decorator_filter_1.default)((0, redux_persistence_engine_localstorage_1.default)(storageKey), [
+    const storageEngine = redux_storage_decorator_filter_1.default(redux_persistence_engine_localstorage_1.default(storageKey), [
         ['translation', 'locale'],
         'transaction',
         ['storage', 'version'],

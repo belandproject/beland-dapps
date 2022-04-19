@@ -8,7 +8,7 @@ const actions_1 = require("../../modules/wallet/actions");
 const MetaTransactionError_1 = __importDefault(require("./MetaTransactionError"));
 const mapState = (_state) => ({});
 const mapDispatch = (dispatch) => ({
-    onSwitchNetwork: chainId => dispatch((0, actions_1.switchNetworkRequest)(chainId))
+    onSwitchNetwork: chainId => dispatch(actions_1.switchNetworkRequest(chainId))
 });
-exports.default = (0, react_redux_1.connect)(mapState, mapDispatch)(MetaTransactionError_1.default);
+exports.default = react_redux_1.connect(mapState, mapDispatch)(MetaTransactionError_1.default);
 //# sourceMappingURL=MetaTransactionError.container.js.map

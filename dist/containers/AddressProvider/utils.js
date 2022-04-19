@@ -17,7 +17,7 @@ const isENSAddress = (address) => {
 };
 exports.isENSAddress = isENSAddress;
 const resolveENSname = (name, chainId) => __awaiter(void 0, void 0, void 0, function* () {
-    const connectedProvider = yield (0, eth_1.getNetworkProvider)(chainId);
+    const connectedProvider = yield eth_1.getNetworkProvider(chainId);
     const ethersProvider = new ethers_1.ethers.providers.Web3Provider(connectedProvider);
     return yield ethersProvider.resolveName(name);
 });

@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -33,7 +29,7 @@ class TransactionLink extends React.PureComponent {
             return null;
         }
         const { chainId, className, target, text, children } = this.props;
-        const href = (0, utils_1.getTransactionHref)({ address, txHash }, chainId);
+        const href = utils_1.getTransactionHref({ address, txHash }, chainId);
         return (React.createElement("a", { className: className, href: href, target: target }, children || text || href));
     }
 }

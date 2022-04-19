@@ -9,22 +9,22 @@ function createAnalyticsSaga(options = {
 }) {
     const { LOCATION_CHANGE } = options;
     return function* analyticsSaga() {
-        yield (0, effects_1.takeLatest)(actions_1.CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess);
-        yield (0, effects_1.takeEvery)(LOCATION_CHANGE, handleLocationChange);
+        yield effects_1.takeLatest(actions_1.CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess);
+        yield effects_1.takeEvery(LOCATION_CHANGE, handleLocationChange);
     };
 }
 exports.createAnalyticsSaga = createAnalyticsSaga;
 // Identify users
 function handleConnectWalletSuccess(action) {
     const { wallet } = action.payload;
-    const analytics = (0, utils_1.getAnalytics)();
+    const analytics = utils_1.getAnalytics();
     if (analytics) {
         analytics.identify({ ethAddress: wallet.address });
     }
 }
 // Track pages
 function handleLocationChange() {
-    const analytics = (0, utils_1.getAnalytics)();
+    const analytics = utils_1.getAnalytics();
     if (analytics) {
         analytics.page();
     }

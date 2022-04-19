@@ -8,8 +8,8 @@ const Modal_1 = __importDefault(require("./Modal"));
 const actions_1 = require("../../modules/modal/actions");
 const mapState = (_) => ({});
 const mapDispatch = (dispatch) => ({
-    onCloseModal: (name) => dispatch((0, actions_1.closeModal)(name))
+    onCloseModal: (name) => dispatch(actions_1.closeModal(name))
 });
 const mergeProps = (stateProps, dispatchProps, ownProps) => (Object.assign(Object.assign(Object.assign({}, stateProps), dispatchProps), ownProps));
-exports.default = (0, react_redux_1.connect)(mapState, mapDispatch, mergeProps)(Modal_1.default);
+exports.default = react_redux_1.connect(mapState, mapDispatch, mergeProps)(Modal_1.default);
 //# sourceMappingURL=Modal.container.js.map

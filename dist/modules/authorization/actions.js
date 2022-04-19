@@ -7,38 +7,38 @@ const utils_1 = require("../transaction/utils");
 exports.FETCH_AUTHORIZATIONS_REQUEST = '[Request] Fetch Authorizations';
 exports.FETCH_AUTHORIZATIONS_SUCCESS = '[Success] Fetch Authorizations';
 exports.FETCH_AUTHORIZATIONS_FAILURE = '[Failure] Fetch Authorizations';
-const fetchAuthorizationsRequest = (authorizations) => (0, typesafe_actions_1.action)(exports.FETCH_AUTHORIZATIONS_REQUEST, { authorizations });
+const fetchAuthorizationsRequest = (authorizations) => typesafe_actions_1.action(exports.FETCH_AUTHORIZATIONS_REQUEST, { authorizations });
 exports.fetchAuthorizationsRequest = fetchAuthorizationsRequest;
-const fetchAuthorizationsSuccess = (authorizations) => (0, typesafe_actions_1.action)(exports.FETCH_AUTHORIZATIONS_SUCCESS, { authorizations });
+const fetchAuthorizationsSuccess = (authorizations) => typesafe_actions_1.action(exports.FETCH_AUTHORIZATIONS_SUCCESS, { authorizations });
 exports.fetchAuthorizationsSuccess = fetchAuthorizationsSuccess;
-const fetchAuthorizationsFailure = (authorizations, error) => (0, typesafe_actions_1.action)(exports.FETCH_AUTHORIZATIONS_FAILURE, { authorizations, error });
+const fetchAuthorizationsFailure = (authorizations, error) => typesafe_actions_1.action(exports.FETCH_AUTHORIZATIONS_FAILURE, { authorizations, error });
 exports.fetchAuthorizationsFailure = fetchAuthorizationsFailure;
 // Grant Token
 exports.GRANT_TOKEN_REQUEST = '[Request] Grant Token';
 exports.GRANT_TOKEN_SUCCESS = '[Success] Grant Token';
 exports.GRANT_TOKEN_FAILURE = '[Failure] Grant Token';
-const grantTokenRequest = (authorization) => (0, typesafe_actions_1.action)(exports.GRANT_TOKEN_REQUEST, {
+const grantTokenRequest = (authorization) => typesafe_actions_1.action(exports.GRANT_TOKEN_REQUEST, {
     authorization
 });
 exports.grantTokenRequest = grantTokenRequest;
-const grantTokenSuccess = (authorization, chainId, txHash) => (0, typesafe_actions_1.action)(exports.GRANT_TOKEN_SUCCESS, Object.assign(Object.assign({}, (0, utils_1.buildTransactionPayload)(chainId, txHash, {
+const grantTokenSuccess = (authorization, chainId, txHash) => typesafe_actions_1.action(exports.GRANT_TOKEN_SUCCESS, Object.assign(Object.assign({}, utils_1.buildTransactionPayload(chainId, txHash, {
     authorization
 })), { authorization }));
 exports.grantTokenSuccess = grantTokenSuccess;
-const grantTokenFailure = (authorization, error) => (0, typesafe_actions_1.action)(exports.GRANT_TOKEN_FAILURE, { authorization, error });
+const grantTokenFailure = (authorization, error) => typesafe_actions_1.action(exports.GRANT_TOKEN_FAILURE, { authorization, error });
 exports.grantTokenFailure = grantTokenFailure;
 // Revoke Token
 exports.REVOKE_TOKEN_REQUEST = '[Request] Revoke Token';
 exports.REVOKE_TOKEN_SUCCESS = '[Success] Revoke Token';
 exports.REVOKE_TOKEN_FAILURE = '[Failure] Revoke Token';
-const revokeTokenRequest = (authorization) => (0, typesafe_actions_1.action)(exports.REVOKE_TOKEN_REQUEST, {
+const revokeTokenRequest = (authorization) => typesafe_actions_1.action(exports.REVOKE_TOKEN_REQUEST, {
     authorization
 });
 exports.revokeTokenRequest = revokeTokenRequest;
-const revokeTokenSuccess = (authorization, chainId, txHash) => (0, typesafe_actions_1.action)(exports.REVOKE_TOKEN_SUCCESS, Object.assign(Object.assign({}, (0, utils_1.buildTransactionPayload)(chainId, txHash, {
+const revokeTokenSuccess = (authorization, chainId, txHash) => typesafe_actions_1.action(exports.REVOKE_TOKEN_SUCCESS, Object.assign(Object.assign({}, utils_1.buildTransactionPayload(chainId, txHash, {
     authorization
 })), { authorization }));
 exports.revokeTokenSuccess = revokeTokenSuccess;
-const revokeTokenFailure = (authorization, error) => (0, typesafe_actions_1.action)(exports.REVOKE_TOKEN_FAILURE, { authorization, error });
+const revokeTokenFailure = (authorization, error) => typesafe_actions_1.action(exports.REVOKE_TOKEN_FAILURE, { authorization, error });
 exports.revokeTokenFailure = revokeTokenFailure;
 //# sourceMappingURL=actions.js.map

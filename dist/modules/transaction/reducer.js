@@ -14,10 +14,10 @@ function transactionReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case actions_1.FETCH_TRANSACTION_REQUEST: {
             const actionRef = action.payload.action;
-            const transaction = (0, utils_1.getTransactionFromAction)(actionRef);
+            const transaction = utils_1.getTransactionFromAction(actionRef);
             const otherTransactions = state.data.filter(otherTransaction => otherTransaction.hash !== transaction.hash);
             return {
-                loading: (0, reducer_1.loadingReducer)(state.loading, action),
+                loading: reducer_1.loadingReducer(state.loading, action),
                 error: null,
                 data: [
                     ...otherTransactions,
@@ -30,7 +30,7 @@ function transactionReducer(state = INITIAL_STATE, action) {
         case actions_1.FETCH_TRANSACTION_SUCCESS: {
             const actionTransaction = action.payload.transaction;
             return {
-                loading: (0, reducer_1.loadingReducer)(state.loading, action),
+                loading: reducer_1.loadingReducer(state.loading, action),
                 error: null,
                 data: state.data.map((transaction) => 
                 // prettier-ignore
@@ -41,7 +41,7 @@ function transactionReducer(state = INITIAL_STATE, action) {
         case actions_1.FETCH_TRANSACTION_FAILURE: {
             const { hash, status, message } = action.payload;
             return {
-                loading: (0, reducer_1.loadingReducer)(state.loading, action),
+                loading: reducer_1.loadingReducer(state.loading, action),
                 error: message,
                 data: state.data.map((transaction) => 
                 // prettier-ignore
@@ -51,7 +51,7 @@ function transactionReducer(state = INITIAL_STATE, action) {
         }
         case actions_1.UPDATE_TRANSACTION_STATUS: {
             return {
-                loading: (0, reducer_1.loadingReducer)(state.loading, action),
+                loading: reducer_1.loadingReducer(state.loading, action),
                 error: null,
                 data: state.data.map((transaction) => 
                 // prettier-ignore
@@ -61,7 +61,7 @@ function transactionReducer(state = INITIAL_STATE, action) {
         }
         case actions_1.FIX_REVERTED_TRANSACTION: {
             return {
-                loading: (0, reducer_1.loadingReducer)(state.loading, action),
+                loading: reducer_1.loadingReducer(state.loading, action),
                 error: null,
                 data: state.data.map((transaction) => 
                 // prettier-ignore
@@ -71,7 +71,7 @@ function transactionReducer(state = INITIAL_STATE, action) {
         }
         case actions_1.UPDATE_TRANSACTION_NONCE: {
             return {
-                loading: (0, reducer_1.loadingReducer)(state.loading, action),
+                loading: reducer_1.loadingReducer(state.loading, action),
                 error: null,
                 data: state.data.map((transaction) => action.payload.hash === transaction.hash
                     ? Object.assign(Object.assign({}, transaction), { nonce: action.payload.nonce }) : transaction)
@@ -79,7 +79,7 @@ function transactionReducer(state = INITIAL_STATE, action) {
         }
         case actions_1.REPLACE_TRANSACTION_SUCCESS: {
             return {
-                loading: (0, reducer_1.loadingReducer)(state.loading, action),
+                loading: reducer_1.loadingReducer(state.loading, action),
                 error: null,
                 data: state.data.map((transaction) => action.payload.hash === transaction.hash
                     ? Object.assign(Object.assign({}, transaction), { status: types_1.TransactionStatus.REPLACED, replacedBy: action.payload.replaceBy }) : transaction)
@@ -88,7 +88,7 @@ function transactionReducer(state = INITIAL_STATE, action) {
         case actions_1.CLEAR_TRANSACTIONS: {
             return Object.assign(Object.assign({}, state), { data: state.data.filter(transaction => transaction.from.toLowerCase() !==
                     action.payload.address.toLowerCase() &&
-                    (action.payload.clearPendings || !(0, utils_1.isPending)(transaction.status))) });
+                    (action.payload.clearPendings || !utils_1.isPending(transaction.status))) });
         }
         case actions_1.CLEAR_TRANSACTION: {
             return Object.assign(Object.assign({}, state), { data: state.data.filter(transaction => transaction.hash !== action.payload.hash) });

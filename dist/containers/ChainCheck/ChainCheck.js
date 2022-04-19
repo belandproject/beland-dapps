@@ -15,7 +15,7 @@ class ChainCheck extends react_1.default.PureComponent {
         return (react_1.default.createElement(ChainProvider_1.default, null, data => {
             const isEnabled = data.isSupported || data.chainId === chainId;
             return (react_1.default.createElement(Popup_1.Popup, { disabled: isEnabled, position: "top center", content: react_1.default.createElement(utils_1.T, { id: "@dapps.button.network_not_supported", values: {
-                        expectedChainName: (react_1.default.createElement("b", null, (0, chain_id_1.getChainName)((0, eth_1.getConnectedProviderChainId)())))
+                        expectedChainName: (react_1.default.createElement("b", null, chain_id_1.getChainName(eth_1.getConnectedProviderChainId())))
                     } }), trigger: children(isEnabled) }));
         }));
     }

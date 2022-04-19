@@ -20,7 +20,7 @@ const selectors_1 = require("./selectors");
 // Patch Samsung's Cucumber provider send to support promises
 const provider = window.ethereum;
 let cucumberProviderSend;
-if ((0, eth_1.isCucumberProvider)()) {
+if (eth_1.isCucumberProvider()) {
     const _send = provider.send;
     cucumberProviderSend = (...args) => {
         try {
@@ -36,46 +36,46 @@ let CHAIN_ID;
 let POLL_INTERVAL = 5 * 60 * 1000; // 60 seconds
 let polling = false;
 function* walletSaga() {
-    yield (0, effects_1.fork)(initializeAppChainId);
-    yield (0, effects_1.all)([
-        (0, effects_1.takeEvery)(actions_1.CONNECT_WALLET_REQUEST, handleConnectWalletRequest),
-        (0, effects_1.takeEvery)(actions_1.ENABLE_WALLET_REQUEST, handleEnableWalletRequest),
-        (0, effects_1.takeEvery)(actions_1.ENABLE_WALLET_SUCCESS, handleEnableWalletSuccess),
-        (0, effects_1.takeEvery)(actions_1.FETCH_WALLET_REQUEST, handleFetchWalletRequest),
-        (0, effects_1.takeEvery)(actions_1.DISCONNECT_WALLET, handleDisconnectWallet),
-        (0, effects_1.takeEvery)(actions_1.CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess),
-        (0, effects_1.takeEvery)(actions_1.SWITCH_NETWORK_REQUEST, handleSwitchNetworkRequest),
-        (0, effects_1.takeEvery)(actions_1.SWITCH_NETWORK_SUCCESS, handleSwitchNetworkSucces)
+    yield effects_1.fork(initializeAppChainId);
+    yield effects_1.all([
+        effects_1.takeEvery(actions_1.CONNECT_WALLET_REQUEST, handleConnectWalletRequest),
+        effects_1.takeEvery(actions_1.ENABLE_WALLET_REQUEST, handleEnableWalletRequest),
+        effects_1.takeEvery(actions_1.ENABLE_WALLET_SUCCESS, handleEnableWalletSuccess),
+        effects_1.takeEvery(actions_1.FETCH_WALLET_REQUEST, handleFetchWalletRequest),
+        effects_1.takeEvery(actions_1.DISCONNECT_WALLET, handleDisconnectWallet),
+        effects_1.takeEvery(actions_1.CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess),
+        effects_1.takeEvery(actions_1.SWITCH_NETWORK_REQUEST, handleSwitchNetworkRequest),
+        effects_1.takeEvery(actions_1.SWITCH_NETWORK_SUCCESS, handleSwitchNetworkSucces)
     ]);
 }
 exports.walletSaga = walletSaga;
 function* initializeAppChainId() {
-    yield (0, effects_1.put)((0, actions_1.setAppChainId)(CHAIN_ID));
+    yield effects_1.put(actions_1.setAppChainId(CHAIN_ID));
 }
 function* handleConnectWalletRequest() {
     try {
-        yield (0, effects_1.put)((0, actions_1.fetchWalletRequest)());
-        const { success, failure } = yield (0, effects_1.race)({
-            success: (0, effects_1.take)(actions_1.FETCH_WALLET_SUCCESS),
-            failure: (0, effects_1.take)(actions_1.FETCH_WALLET_FAILURE)
+        yield effects_1.put(actions_1.fetchWalletRequest());
+        const { success, failure } = yield effects_1.race({
+            success: effects_1.take(actions_1.FETCH_WALLET_SUCCESS),
+            failure: effects_1.take(actions_1.FETCH_WALLET_FAILURE)
         });
         if (success) {
-            yield (0, effects_1.put)((0, actions_1.connectWalletSuccess)(success.payload.wallet));
+            yield effects_1.put(actions_1.connectWalletSuccess(success.payload.wallet));
         }
         else {
             throw new Error(failure.payload.error);
         }
     }
     catch (error) {
-        yield (0, effects_1.put)((0, actions_1.disconnectWallet)());
-        yield (0, effects_1.put)((0, actions_1.connectWalletFailure)(error.message));
+        yield effects_1.put(actions_1.disconnectWallet());
+        yield effects_1.put(actions_1.connectWalletFailure(error.message));
     }
 }
 function* handleEnableWalletRequest(action) {
     const { providerType } = action.payload;
     try {
-        const account = yield (0, effects_1.call)(() => __awaiter(this, void 0, void 0, function* () {
-            if ((0, eth_1.isCucumberProvider)()) {
+        const account = yield effects_1.call(() => __awaiter(this, void 0, void 0, function* () {
+            if (eth_1.isCucumberProvider()) {
                 yield cucumberProviderSend('eth_requestAccounts');
             }
             const { account } = yield connect_1.connection.connect(providerType, CHAIN_ID);
@@ -84,19 +84,19 @@ function* handleEnableWalletRequest(action) {
         if (!account) {
             throw new Error('Enable did not return any accounts');
         }
-        yield (0, effects_1.put)((0, actions_1.enableWalletSuccess)(providerType));
+        yield effects_1.put(actions_1.enableWalletSuccess(providerType));
     }
     catch (error) {
-        yield (0, effects_1.put)((0, actions_1.disconnectWallet)());
-        yield (0, effects_1.put)((0, actions_1.enableWalletFailure)(error.message));
+        yield effects_1.put(actions_1.disconnectWallet());
+        yield effects_1.put(actions_1.enableWalletFailure(error.message));
     }
 }
 function* handleEnableWalletSuccess(_action) {
-    yield (0, effects_1.put)((0, actions_1.connectWalletRequest)());
+    yield effects_1.put(actions_1.connectWalletRequest());
 }
 function* handleDisconnectWallet(_action) {
     try {
-        yield (0, effects_1.call)(() => connect_1.connection.disconnect());
+        yield effects_1.call(() => connect_1.connection.disconnect());
     }
     catch (error) {
         console.error(error);
@@ -106,11 +106,11 @@ function* handleDisconnectWallet(_action) {
 }
 function* handleFetchWalletRequest(_action) {
     try {
-        const wallet = yield (0, effects_1.call)(utils_1.buildWallet);
-        yield (0, effects_1.put)((0, actions_1.fetchWalletSuccess)(wallet));
+        const wallet = yield effects_1.call(utils_1.buildWallet);
+        yield effects_1.put(actions_1.fetchWalletSuccess(wallet));
     }
     catch (error) {
-        yield (0, effects_1.put)((0, actions_1.fetchWalletFailure)(error.message));
+        yield effects_1.put(actions_1.fetchWalletFailure(error.message));
     }
 }
 function* handleConnectWalletSuccess() {
@@ -118,58 +118,58 @@ function* handleConnectWalletSuccess() {
     if (!polling && POLL_INTERVAL > 0) {
         polling = true;
         while (polling) {
-            yield (0, effects_1.delay)(POLL_INTERVAL);
-            const isWalletConnected = yield (0, effects_1.select)(selectors_1.isConnected);
+            yield effects_1.delay(POLL_INTERVAL);
+            const isWalletConnected = yield effects_1.select(selectors_1.isConnected);
             if (isWalletConnected) {
-                yield (0, effects_1.put)((0, actions_1.fetchWalletRequest)());
+                yield effects_1.put(actions_1.fetchWalletRequest());
             }
         }
     }
 }
 function* handleSwitchNetworkRequest(action) {
     const { chainId } = action.payload;
-    const provider = yield (0, effects_1.call)(eth_1.getConnectedProvider);
+    const provider = yield effects_1.call(eth_1.getConnectedProvider);
     try {
         if (!provider) {
             throw new Error('Could not get provider');
         }
-        yield (0, effects_1.call)([provider, 'request'], {
+        yield effects_1.call([provider, 'request'], {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: '0x' + chainId.toString(16) }]
         });
-        yield (0, effects_1.put)((0, actions_1.switchNetworkSuccess)(chainId));
+        yield effects_1.put(actions_1.switchNetworkSuccess(chainId));
     }
     catch (switchError) {
         // This error code indicates that the chain has not been added to MetaMask.
         if (provider && switchError.code === 4902) {
             try {
-                yield (0, effects_1.call)([provider, 'request'], {
+                yield effects_1.call([provider, 'request'], {
                     method: 'wallet_addEthereumChain',
-                    params: [(0, utils_1.getAddEthereumChainParameters)(chainId)]
+                    params: [utils_1.getAddEthereumChainParameters(chainId)]
                 });
-                const newChainId = yield (0, effects_1.call)([provider, 'request'], {
+                const newChainId = yield effects_1.call([provider, 'request'], {
                     method: 'eth_chainId',
                     params: []
                 });
                 if (chainId !== parseInt(newChainId, 16)) {
                     throw new Error('chainId did not change after adding network');
                 }
-                yield (0, effects_1.put)((0, actions_1.switchNetworkSuccess)(chainId));
+                yield effects_1.put(actions_1.switchNetworkSuccess(chainId));
                 return;
             }
             catch (addError) {
-                yield (0, effects_1.put)((0, actions_1.switchNetworkFailure)(chainId, `Error adding network: ${addError.message}`));
+                yield effects_1.put(actions_1.switchNetworkFailure(chainId, `Error adding network: ${addError.message}`));
                 return;
             }
         }
-        yield (0, effects_1.put)((0, actions_1.switchNetworkFailure)(chainId, `Error switching network: ${switchError.message}`));
+        yield effects_1.put(actions_1.switchNetworkFailure(chainId, `Error switching network: ${switchError.message}`));
     }
 }
 function* handleSwitchNetworkSucces(_action) {
-    yield (0, effects_1.put)((0, actions_1.fetchWalletRequest)());
+    yield effects_1.put(actions_1.fetchWalletRequest());
 }
 function createWalletSaga(options) {
-    if ((0, eth_1.isValidChainId)(options.CHAIN_ID)) {
+    if (eth_1.isValidChainId(options.CHAIN_ID)) {
         CHAIN_ID = Number(options.CHAIN_ID);
     }
     else {

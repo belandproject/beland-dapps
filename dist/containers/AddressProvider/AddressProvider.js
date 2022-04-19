@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -38,22 +34,22 @@ const AddressProvider_types_1 = require("./AddressProvider.types");
 const utils_1 = require("./utils");
 const AddressProvider = (props) => {
     const { children, input, chainId } = props;
-    const isENS = input && (0, utils_1.isENSAddress)(input);
-    const [address, setAddress] = (0, react_1.useState)(input && !isENS ? input : null);
-    const [isLoading, setIsLoading] = (0, react_1.useState)(!!isENS);
-    const [error, setError] = (0, react_1.useState)();
-    (0, react_1.useEffect)(() => {
+    const isENS = input && utils_1.isENSAddress(input);
+    const [address, setAddress] = react_1.useState(input && !isENS ? input : null);
+    const [isLoading, setIsLoading] = react_1.useState(!!isENS);
+    const [error, setError] = react_1.useState();
+    react_1.useEffect(() => {
         if (address && !ethers_1.utils.isAddress(address) && !isENS) {
             setError(AddressProvider_types_1.AddressError.INVALID);
         }
     }, [address, isENS]);
     // Resolves ENS name if needed
-    (0, react_1.useEffect)(() => {
+    react_1.useEffect(() => {
         let cancel = false;
         const resolveAddress = () => __awaiter(void 0, void 0, void 0, function* () {
             if (input && isENS) {
                 setIsLoading(true);
-                const resolvedAddress = yield (0, utils_1.resolveENSname)(input, chainId);
+                const resolvedAddress = yield utils_1.resolveENSname(input, chainId);
                 setIsLoading(false);
                 if (cancel)
                     return;
