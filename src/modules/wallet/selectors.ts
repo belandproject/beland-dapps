@@ -1,4 +1,4 @@
-import { ChainId } from '@beland/schemas'
+import { ChainId } from '@beland/schemas/dist/dapps/chain-id'
 import { Network } from '@beland/schemas/dist/dapps/network'
 import { isLoadingType } from '../loading/selectors'
 import { CONNECT_WALLET_REQUEST, ENABLE_WALLET_REQUEST } from './actions'

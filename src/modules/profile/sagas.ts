@@ -1,5 +1,5 @@
 import { takeLatest, put, call, takeEvery } from 'redux-saga/effects'
-import { Avatar } from '@beland/schemas'
+import { Avatar } from '@beland/schemas/dist/platform/profile/avatar'
 import { Entity, EntityType } from 'dcl-catalyst-commons/dist/types'
 import { PeerAPI } from '../../lib/peer'
 import { EntitesOperator } from '../../lib/entities'

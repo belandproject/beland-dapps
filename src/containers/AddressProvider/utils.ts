@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import { ChainId } from '@beland/schemas'
+import { ChainId } from '@beland/schemas/dist/dapps/chain-id'
 import { getNetworkProvider } from '../../lib/eth'
 
 export const isENSAddress = (address: string) => {

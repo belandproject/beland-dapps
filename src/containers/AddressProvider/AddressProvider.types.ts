@@ -1,4 +1,4 @@
-import { ChainId } from '@beland/schemas'
+import { ChainId } from '@beland/schemas/dist/dapps/chain-id'
 import React from 'react'
 
 export enum AddressError {

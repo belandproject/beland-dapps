@@ -2,7 +2,7 @@ import { call, select, take } from 'redux-saga/effects'
 import * as matchers from 'redux-saga-test-plan/matchers'
 import { expectSaga } from 'redux-saga-test-plan'
 import { ErrorCode } from '@beland/transactions'
-import { ChainId } from '@beland/schemas'
+import { ChainId } from '@beland/schemas/dist/dapps/chain-id'
 import { switchNetworkSuccess } from '../wallet/actions'
 import {
   getContractAccountErrorToast,

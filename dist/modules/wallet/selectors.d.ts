@@ -1,4 +1,4 @@
-import { ChainId } from '@beland/schemas';
+import { ChainId } from '@beland/schemas/dist/dapps/chain-id';
 import { Network } from '@beland/schemas/dist/dapps/network';
 import { WalletState } from './reducer';
 export declare const getState: (state: any) => WalletState;

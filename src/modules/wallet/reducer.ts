@@ -1,5 +1,5 @@
 import { loadingReducer, LoadingState } from '../loading/reducer'
-import { ChainId } from '@beland/schemas'
+import { ChainId } from '@beland/schemas/dist/dapps/chain-id'
 import { Wallet } from './types'
 import {
   ConnectWalletRequestAction,

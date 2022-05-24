@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { ChainId } from '@beland/schemas';
+import { ChainId } from '@beland/schemas/dist/dapps/chain-id';
 export declare type Props = {
     text: React.ReactNode;
     learnMoreLink?: string;

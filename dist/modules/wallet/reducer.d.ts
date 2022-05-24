@@ -1,5 +1,5 @@
 import { LoadingState } from '../loading/reducer';
-import { ChainId } from '@beland/schemas';
+import { ChainId } from '@beland/schemas/dist/dapps/chain-id';
 import { Wallet } from './types';
 import { ConnectWalletRequestAction, ConnectWalletSuccessAction, ConnectWalletFailureAction, DisconnectWalletAction, ChangeAccountAction, ChangeNetworkAction, EnableWalletRequestAction, EnableWalletSuccessAction, EnableWalletFailureAction, FetchWalletRequestAction, FetchWalletSuccessAction, FetchWalletFailureAction, AcceptNetworkPartialSupportAction, SetAppChainIdAction } from './actions';
 export declare type WalletState = {

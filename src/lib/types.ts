@@ -1,4 +1,4 @@
-import { Avatar } from '@beland/schemas'
+import { Avatar } from '@beland/schemas/dist/platform/profile'
 import { Entity } from 'dcl-catalyst-commons/dist/types'
 
 declare module 'react-intl'

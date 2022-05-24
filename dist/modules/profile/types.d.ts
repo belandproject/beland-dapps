@@ -1,4 +1,4 @@
-import { Avatar } from '@beland/schemas';
+import { Avatar } from '@beland/schemas/dist/platform/profile/avatar';
 export declare type Profile = {
     avatars: Avatar[];
 };

@@ -1,5 +1,6 @@
 import React from 'react'
-import { getChainName, Network } from '@beland/schemas'
+import { Network } from '@beland/schemas/dist/dapps/network'
+import { getChainName } from '@beland/schemas/dist/dapps/chain-id'
 import { Button, Row } from '@beland/uikit'
 import { t } from '../../modules/translation/utils'
 import { getChainIdByNetwork } from '../../lib/eth'
