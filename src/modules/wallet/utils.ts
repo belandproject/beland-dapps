@@ -2,9 +2,7 @@ import { EventEmitter } from 'events'
 import { PopulatedTransaction, Contract, providers } from 'ethers'
 import { Eth } from 'web3x/eth'
 import { Address } from 'web3x/address'
-import {
-  ContractData,
-} from '@beland/transactions'
+import { ContractData } from '@beland/transactions'
 import { ChainId, getChainName } from '@beland/schemas/dist/dapps/chain-id'
 import {
   getConnectedProvider,
@@ -121,7 +119,7 @@ export async function sendTransaction(...args: any[]) {
     if (!connectedProvider) {
       throw new Error('Provider not connected')
     }
-    
+
     // get a provider for the target network
     const targetNetworkProvider = await getTargetNetworkProvider(
       contract.chainId
@@ -144,10 +142,11 @@ export async function sendTransaction(...args: any[]) {
           contractMethodNameOrGetPopulatedTransaction
         ](...contractArguments))
 
-      const signer = targetNetworkProvider.getSigner()
-      const tx = await signer.sendTransaction(unsignedTx)
-      transactionEvents.emit(TransactionEventType.SUCCESS, { txHash: tx.hash })
-      return tx.hash
+    const signer = targetNetworkProvider.getSigner()
+    const tx = await signer.sendTransaction(unsignedTx)
+    await tx.wait()
+    transactionEvents.emit(TransactionEventType.SUCCESS, { txHash: tx.hash })
+    return tx.hash
   } catch (error) {
     const data: TransactionEventData<TransactionEventType.ERROR> = {
       type: TransactionEventType.ERROR,
