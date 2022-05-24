@@ -9,13 +9,13 @@ const selectors_1 = require("../../modules/translation/selectors");
 const actions_1 = require("../../modules/translation/actions");
 const mapState = (state) => {
     return {
-        locale: selectors_1.getLocale(state),
-        hasTranslations: selectors_1.isEnabled(state)
+        locale: (0, selectors_1.getLocale)(state),
+        hasTranslations: (0, selectors_1.isEnabled)(state)
     };
 };
 const mapDispatch = (dispatch) => ({
-    onChange: (_, { value }) => dispatch(actions_1.changeLocale(value))
+    onChange: (_, { value }) => dispatch((0, actions_1.changeLocale)(value))
 });
 const mergeProps = (stateProps, dispatchProps, ownProps) => (Object.assign(Object.assign(Object.assign({}, stateProps), dispatchProps), ownProps));
-exports.default = react_redux_1.connect(mapState, mapDispatch, mergeProps)(Footer_1.default);
+exports.default = (0, react_redux_1.connect)(mapState, mapDispatch, mergeProps)(Footer_1.default);
 //# sourceMappingURL=Footer.container.js.map

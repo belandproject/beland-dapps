@@ -8,13 +8,13 @@ const { METAMASK, DAPPER, SAMSUNG, FORTMATIC, COINBASE, WALLET_CONNECT, WALLET_L
 function toModalOptionType(providerType) {
     switch (providerType) {
         case provider_type_1.ProviderType.INJECTED:
-            if (eth_1.isCucumberProvider()) {
+            if ((0, eth_1.isCucumberProvider)()) {
                 return SAMSUNG;
             }
-            else if (eth_1.isCoinbaseProvider()) {
+            else if ((0, eth_1.isCoinbaseProvider)()) {
                 return COINBASE;
             }
-            else if (eth_1.isDapperProvider()) {
+            else if ((0, eth_1.isDapperProvider)()) {
                 return DAPPER;
             }
             else {

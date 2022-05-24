@@ -13,10 +13,10 @@ const selectors_3 = require("../../modules/translation/selectors");
 const selectors_4 = require("../../modules/transaction/selectors");
 const UserMenu_1 = __importDefault(require("./UserMenu"));
 const mapState = (state) => {
-    const isSignedIn = selectors_1.isConnected(state);
-    const address = selectors_1.getAddress(state);
-    const profile = selectors_2.getData(state)[address];
-    const networks = selectors_1.getNetworks(state);
+    const isSignedIn = (0, selectors_1.isConnected)(state);
+    const address = (0, selectors_1.getAddress)(state);
+    const profile = (0, selectors_2.getData)(state)[address];
+    const networks = (0, selectors_1.getNetworks)(state);
     const manaBalances = {};
     if (isSignedIn) {
         const networkList = Object.values(network_1.Network);
@@ -32,14 +32,14 @@ const mapState = (state) => {
         manaBalances,
         avatar: profile ? profile.avatars[0] : undefined,
         isSignedIn,
-        isSigningIn: selectors_1.isConnecting(state),
-        hasActivity: selectors_4.getTransactions(state, address || '').some(tx => utils_1.isPending(tx.status)),
-        hasTranslations: selectors_3.isEnabled(state)
+        isSigningIn: (0, selectors_1.isConnecting)(state),
+        hasActivity: (0, selectors_4.getTransactions)(state, address || '').some(tx => (0, utils_1.isPending)(tx.status)),
+        hasTranslations: (0, selectors_3.isEnabled)(state)
     };
 };
 const mapDispatch = (dispatch) => ({
-    onSignOut: () => dispatch(actions_1.disconnectWallet())
+    onSignOut: () => dispatch((0, actions_1.disconnectWallet)())
 });
 const mergeProps = (mapStateProps, mapDispatchProps, ownProps) => (Object.assign(Object.assign(Object.assign({}, mapStateProps), mapDispatchProps), ownProps));
-exports.default = react_redux_1.connect(mapState, mapDispatch, mergeProps)(UserMenu_1.default);
+exports.default = (0, react_redux_1.connect)(mapState, mapDispatch, mergeProps)(UserMenu_1.default);
 //# sourceMappingURL=UserMenu.container.js.map

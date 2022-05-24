@@ -11,14 +11,14 @@ function createAnalyticsMiddleware(apiKey) {
         console.warn('Analytics: middleware disabled due to missing API key');
         return disabledMiddleware;
     }
-    const analytics = utils_1.getAnalytics();
+    const analytics = (0, utils_1.getAnalytics)();
     if (!analytics) {
         console.warn('Analytics: middleware disabled because `window.analytics` is not present');
         return disabledMiddleware;
     }
     analytics.load(apiKey);
     return _ => next => action => {
-        utils_1.track(action);
+        (0, utils_1.track)(action);
         next(action);
     };
 }

@@ -9,10 +9,10 @@ const selectors_1 = require("../../modules/toast/selectors");
 const actions_1 = require("../../modules/toast/actions");
 const ToastProvider_1 = __importDefault(require("./ToastProvider"));
 const mapState = (state) => ({
-    toasts: selectors_1.getToasts(state)
+    toasts: (0, selectors_1.getToasts)(state)
 });
 const mapDispatch = (dispatch) => ({
-    onClose: (id) => dispatch(actions_1.hideToast(id))
+    onClose: (id) => dispatch((0, actions_1.hideToast)(id))
 });
-exports.default = react_redux_1.connect(mapState, mapDispatch)(ToastProvider_1.default);
+exports.default = (0, react_redux_1.connect)(mapState, mapDispatch)(ToastProvider_1.default);
 //# sourceMappingURL=ToastProvider.container.js.map

@@ -21,7 +21,7 @@ class WalletProvider extends react_1.default.PureComponent {
         this.handleChangeAccount = () => __awaiter(this, void 0, void 0, function* () {
             const { isConnected, isConnecting, address, onChangeAccount } = this.props;
             try {
-                const wallet = yield utils_1.buildWallet();
+                const wallet = yield (0, utils_1.buildWallet)();
                 if (isConnected && !isConnecting && wallet.address !== address) {
                     onChangeAccount(wallet);
                 }
@@ -33,7 +33,7 @@ class WalletProvider extends react_1.default.PureComponent {
         this.handleChangeNetwork = () => __awaiter(this, void 0, void 0, function* () {
             const { isConnected, isConnecting, chainId, onChangeNetwork } = this.props;
             try {
-                const wallet = yield utils_1.buildWallet();
+                const wallet = yield (0, utils_1.buildWallet)();
                 if (isConnected && !isConnecting && wallet.chainId !== chainId) {
                     onChangeNetwork(wallet);
                 }
@@ -46,7 +46,7 @@ class WalletProvider extends react_1.default.PureComponent {
     handle(method, type, handler) {
         return __awaiter(this, void 0, void 0, function* () {
             // try to use web3x abstraction
-            const provider = yield eth_1.getConnectedProvider();
+            const provider = yield (0, eth_1.getConnectedProvider)();
             if (provider) {
                 try {
                     switch (type) {

@@ -8,15 +8,15 @@ const selectors_1 = require("../../modules/wallet/selectors");
 const actions_1 = require("../../modules/wallet/actions");
 const WalletProvider_1 = __importDefault(require("./WalletProvider"));
 const mapState = (state) => ({
-    address: selectors_1.getAddress(state),
-    chainId: selectors_1.getChainId(state),
-    isConnected: selectors_1.isConnected(state),
-    isConnecting: selectors_1.isConnecting(state)
+    address: (0, selectors_1.getAddress)(state),
+    chainId: (0, selectors_1.getChainId)(state),
+    isConnected: (0, selectors_1.isConnected)(state),
+    isConnecting: (0, selectors_1.isConnecting)(state)
 });
 const mapDispatch = (dispatch) => ({
-    onConnect: () => dispatch(actions_1.connectWalletRequest()),
-    onChangeAccount: address => dispatch(actions_1.changeAccount(address)),
-    onChangeNetwork: network => dispatch(actions_1.changeNetwork(network))
+    onConnect: () => dispatch((0, actions_1.connectWalletRequest)()),
+    onChangeAccount: address => dispatch((0, actions_1.changeAccount)(address)),
+    onChangeNetwork: network => dispatch((0, actions_1.changeNetwork)(network))
 });
-exports.default = react_redux_1.connect(mapState, mapDispatch)(WalletProvider_1.default);
+exports.default = (0, react_redux_1.connect)(mapState, mapDispatch)(WalletProvider_1.default);
 //# sourceMappingURL=WalletProvider.container.js.map

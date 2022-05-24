@@ -10,11 +10,11 @@ const chainConfiguration_1 = require("../../lib/chainConfiguration");
 const eth_1 = require("../../lib/eth");
 const ChainProvider_1 = __importDefault(require("./ChainProvider"));
 const mapState = (state) => {
-    const chainId = selectors_1.getChainId(state) || null;
-    const network = chainId && chainConfiguration_1.getChainConfiguration(chainId).network;
-    const expectedChainId = eth_1.getConnectedProviderChainId();
-    const providerType = eth_1.getConnectedProviderType();
-    const config = expectedChainId && chainConfiguration_1.getChainConfiguration(expectedChainId);
+    const chainId = (0, selectors_1.getChainId)(state) || null;
+    const network = chainId && (0, chainConfiguration_1.getChainConfiguration)(chainId).network;
+    const expectedChainId = (0, eth_1.getConnectedProviderChainId)();
+    const providerType = (0, eth_1.getConnectedProviderType)();
+    const config = expectedChainId && (0, chainConfiguration_1.getChainConfiguration)(expectedChainId);
     const isConnected = !!chainId && !!config;
     const isSupported = isConnected && chainId === expectedChainId;
     const isPartiallySupported = isConnected &&
@@ -32,5 +32,5 @@ const mapState = (state) => {
     };
 };
 const mapDispatch = (_dispatch) => ({});
-exports.default = react_redux_1.connect(mapState, mapDispatch)(ChainProvider_1.default);
+exports.default = (0, react_redux_1.connect)(mapState, mapDispatch)(ChainProvider_1.default);
 //# sourceMappingURL=ChainProvider.container.js.map

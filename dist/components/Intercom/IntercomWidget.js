@@ -36,7 +36,7 @@ class IntercomWidget {
             if (this.isInjected()) {
                 return resolve();
             }
-            const script = utils_1.insertScript({
+            const script = (0, utils_1.insertScript)({
                 src: `https://widget.intercom.io/widget/${this._appId}`
             });
             script.addEventListener('load', () => resolve(), true);
@@ -64,7 +64,7 @@ function getWindowClient(appId) {
         if (!appId) {
             return console.warn('Intercom app id empty. Check that the environment is propery set');
         }
-        if (utils_1.isMobile()) {
+        if ((0, utils_1.isMobile)()) {
             return;
         }
         if (!isInjected()) {

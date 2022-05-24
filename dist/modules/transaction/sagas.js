@@ -12,12 +12,12 @@ const txUtils_1 = require("./txUtils");
 const selectors_2 = require("../wallet/selectors");
 const eth_2 = require("../../lib/eth");
 function* transactionSaga() {
-    yield effects_1.takeEvery(actions_1.FETCH_TRANSACTION_REQUEST, handleFetchTransactionRequest);
-    yield effects_1.takeEvery(actions_1.REPLACE_TRANSACTION_REQUEST, handleReplaceTransactionRequest);
-    yield effects_1.takeEvery(actions_1.WATCH_PENDING_TRANSACTIONS, handleWatchPendingTransactions);
-    yield effects_1.takeEvery(actions_1.WATCH_DROPPED_TRANSACTIONS, handleWatchDroppedTransactions);
-    yield effects_1.takeEvery(actions_1.WATCH_REVERTED_TRANSACTION, handleWatchRevertedTransaction);
-    yield effects_1.takeEvery(actions_2.CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess);
+    yield (0, effects_1.takeEvery)(actions_1.FETCH_TRANSACTION_REQUEST, handleFetchTransactionRequest);
+    yield (0, effects_1.takeEvery)(actions_1.REPLACE_TRANSACTION_REQUEST, handleReplaceTransactionRequest);
+    yield (0, effects_1.takeEvery)(actions_1.WATCH_PENDING_TRANSACTIONS, handleWatchPendingTransactions);
+    yield (0, effects_1.takeEvery)(actions_1.WATCH_DROPPED_TRANSACTIONS, handleWatchDroppedTransactions);
+    yield (0, effects_1.takeEvery)(actions_1.WATCH_REVERTED_TRANSACTION, handleWatchRevertedTransaction);
+    yield (0, effects_1.takeEvery)(actions_2.CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess);
 }
 exports.transactionSaga = transactionSaga;
 const BLOCKS_DEPTH = 100;
@@ -42,27 +42,27 @@ class FailedTransactionError extends Error {
 exports.FailedTransactionError = FailedTransactionError;
 function* handleFetchTransactionRequest(action) {
     const { hash } = action.payload;
-    const transaction = yield effects_1.select(state => selectors_1.getTransaction(state, hash));
+    const transaction = yield (0, effects_1.select)(state => (0, selectors_1.getTransaction)(state, hash));
     if (!transaction) {
         console.warn(`Could not find a valid transaction for hash ${hash}`);
         return;
     }
     try {
-        const address = yield effects_1.select(state => selectors_2.getAddress(state));
+        const address = yield (0, effects_1.select)(state => (0, selectors_2.getAddress)(state));
         watchPendingIndex[hash] = true;
-        let tx = yield effects_1.call(() => txUtils_1.getTransaction(address, transaction.chainId, hash));
+        let tx = yield (0, effects_1.call)(() => (0, txUtils_1.getTransaction)(address, transaction.chainId, hash));
         let isUnknown = tx == null;
         // loop while tx is pending
         while (isUnknown ||
-            utils_1.isPending(tx.status) ||
+            (0, utils_1.isPending)(tx.status) ||
             tx.status === types_1.TransactionStatus.REPLACED // let replaced transactions be kept in the loop so it can be picked up as dropped
         ) {
-            const txInState = yield effects_1.select(state => selectors_1.getTransaction(state, hash));
+            const txInState = yield (0, effects_1.select)(state => (0, selectors_1.getTransaction)(state, hash));
             // update nonce
             const nonceInState = txInState == null ? null : txInState.nonce;
             const nonceInNetwork = isUnknown ? null : tx.nonce;
             if (nonceInNetwork != null && nonceInState == null) {
-                yield effects_1.put(actions_1.updateTransactionNonce(hash, nonceInNetwork));
+                yield (0, effects_1.put)((0, actions_1.updateTransactionNonce)(hash, nonceInNetwork));
             }
             // update status
             const statusInState = txInState == null ? null : txInState.status;
@@ -74,48 +74,48 @@ function* handleFetchTransactionRequest(action) {
                 const isReplaced = statusInNetwork === types_1.TransactionStatus.REPLACED;
                 if (isDropped || isReplaced) {
                     // mark tx as dropped even if it was returned with a 'replaced' status, let the saga find its replacement
-                    yield effects_1.put(actions_1.replaceTransactionRequest(hash, nonce));
+                    yield (0, effects_1.put)((0, actions_1.replaceTransactionRequest)(hash, nonce));
                     throw new FailedTransactionError(hash, types_1.TransactionStatus.DROPPED);
                 }
-                yield effects_1.put(actions_1.updateTransactionStatus(hash, statusInNetwork));
+                yield (0, effects_1.put)((0, actions_1.updateTransactionStatus)(hash, statusInNetwork));
             }
             // sleep
-            yield effects_1.delay(TRANSACTION_FETCH_DELAY);
+            yield (0, effects_1.delay)(TRANSACTION_FETCH_DELAY);
             // update tx status from network
-            tx = yield effects_1.call(() => txUtils_1.getTransaction(address, transaction.chainId, hash));
+            tx = yield (0, effects_1.call)(() => (0, txUtils_1.getTransaction)(address, transaction.chainId, hash));
             isUnknown = tx == null;
         }
         delete watchPendingIndex[hash];
         if (tx.status === types_1.TransactionStatus.CONFIRMED) {
-            yield effects_1.put(actions_1.fetchTransactionSuccess(Object.assign(Object.assign({}, transaction), { status: tx.status, receipt: {
+            yield (0, effects_1.put)((0, actions_1.fetchTransactionSuccess)(Object.assign(Object.assign({}, transaction), { status: tx.status, receipt: {
                     logs: transaction.withReceipt ? tx.receipt.logs : []
                 } })));
         }
         else {
             if (tx.status === types_1.TransactionStatus.REVERTED) {
-                yield effects_1.put(actions_1.watchRevertedTransaction(tx.hash));
+                yield (0, effects_1.put)((0, actions_1.watchRevertedTransaction)(tx.hash));
             }
             throw new FailedTransactionError(tx.hash, tx.status);
         }
     }
     catch (error) {
-        yield effects_1.put(actions_1.fetchTransactionFailure(error.hash, error.status, error.message, transaction));
+        yield (0, effects_1.put)((0, actions_1.fetchTransactionFailure)(error.hash, error.status, error.message, transaction));
     }
 }
 function* handleReplaceTransactionRequest(action) {
     const { hash, nonce } = action.payload;
-    const transaction = yield effects_1.select(state => selectors_1.getTransaction(state, hash));
+    const transaction = yield (0, effects_1.select)(state => (0, selectors_1.getTransaction)(state, hash));
     if (!transaction) {
         console.warn(`Could not find a valid transaction for hash ${hash}`);
         return;
     }
-    const provider = yield effects_1.call(() => eth_2.getConnectedProvider());
+    const provider = yield (0, effects_1.call)(() => (0, eth_2.getConnectedProvider)());
     if (!provider) {
         console.warn('Could not connect to ethereum');
         return;
     }
     const eth = new eth_1.Eth(provider);
-    const accounts = yield effects_1.call(() => eth.getAccounts());
+    const accounts = yield (0, effects_1.call)(() => eth.getAccounts());
     if (accounts.length === 0) {
         console.warn('Could not get accounts');
         return;
@@ -125,21 +125,21 @@ function* handleReplaceTransactionRequest(action) {
     watchDroppedIndex[hash] = true;
     while (true) {
         // check if tx has status, this is to recover from a tx that is dropped momentarily
-        const tx = yield effects_1.call(() => txUtils_1.getTransaction(account, transaction.chainId, hash));
+        const tx = yield (0, effects_1.call)(() => (0, txUtils_1.getTransaction)(account, transaction.chainId, hash));
         if (tx != null) {
-            const txInState = yield effects_1.select(state => selectors_1.getTransaction(state, hash));
-            yield effects_1.put(actions_1.fetchTransactionRequest(account, hash, utils_1.buildActionRef(txInState)));
+            const txInState = yield (0, effects_1.select)(state => (0, selectors_1.getTransaction)(state, hash));
+            yield (0, effects_1.put)((0, actions_1.fetchTransactionRequest)(account, hash, (0, utils_1.buildActionRef)(txInState)));
             break;
         }
         // get latest block
-        const blockNumber = yield effects_1.call(() => eth.getBlockNumber());
+        const blockNumber = yield (0, effects_1.call)(() => eth.getBlockNumber());
         let highestNonce = 0;
         let replacedBy = null;
         // loop through the last blocks
         const startBlock = blockNumber;
         const endBlock = checkpoint || blockNumber - BLOCKS_DEPTH;
         for (let i = startBlock; i > endBlock; i--) {
-            let block = yield effects_1.call(() => eth.getBlock(i, true));
+            let block = yield (0, effects_1.call)(() => eth.getBlock(i, true));
             const transactions = block != null && block.transactions != null ? block.transactions : [];
             // look for a replacement tx, if so break the loop
             replacedBy = transactions.find(tx => tx.nonce === nonce && tx.from.toString() === account);
@@ -157,79 +157,79 @@ function* handleReplaceTransactionRequest(action) {
             // could be due to a race condition when fetching the account nonce
             // it will be sent back to the pending tx saga that will mark it as confirmed/reverted
             if (hash === replacedBy.hash) {
-                const txInState = yield effects_1.select(state => selectors_1.getTransaction(state, hash));
-                yield effects_1.put(actions_1.fetchTransactionRequest(account, hash, utils_1.buildActionRef(txInState)));
+                const txInState = yield (0, effects_1.select)(state => (0, selectors_1.getTransaction)(state, hash));
+                yield (0, effects_1.put)((0, actions_1.fetchTransactionRequest)(account, hash, (0, utils_1.buildActionRef)(txInState)));
             }
             else {
                 // replacement found!
-                yield effects_1.put(actions_1.replaceTransactionSuccess(hash, replacedBy.hash));
+                yield (0, effects_1.put)((0, actions_1.replaceTransactionSuccess)(hash, replacedBy.hash));
             }
             break;
         }
         // if there was nonce higher to than the one in the tx, we can mark it as replaced (altough we don't know which tx replaced it)
         if (highestNonce >= nonce) {
-            yield effects_1.put(actions_1.updateTransactionStatus(action.payload.hash, types_1.TransactionStatus.REPLACED));
+            yield (0, effects_1.put)((0, actions_1.updateTransactionStatus)(action.payload.hash, types_1.TransactionStatus.REPLACED));
             break;
         }
         // sleep
-        yield effects_1.delay(TRANSACTION_FETCH_DELAY);
+        yield (0, effects_1.delay)(TRANSACTION_FETCH_DELAY);
     }
     delete watchDroppedIndex[action.payload.hash];
 }
 function* handleWatchPendingTransactions() {
-    const transactions = yield effects_1.select(selectors_1.getData);
-    const pendingTransactions = transactions.filter(transaction => utils_1.isPending(transaction.status));
+    const transactions = yield (0, effects_1.select)(selectors_1.getData);
+    const pendingTransactions = transactions.filter(transaction => (0, utils_1.isPending)(transaction.status));
     for (const tx of pendingTransactions) {
         if (!watchPendingIndex[tx.hash]) {
             // don't watch transactions that are too old
             if (!isExpired(tx, PENDING_TRANSACTION_THRESHOLD)) {
-                yield effects_1.fork(handleFetchTransactionRequest, actions_1.fetchTransactionRequest(tx.from, tx.hash, utils_1.buildActionRef(tx)));
+                yield (0, effects_1.fork)(handleFetchTransactionRequest, (0, actions_1.fetchTransactionRequest)(tx.from, tx.hash, (0, utils_1.buildActionRef)(tx)));
             }
             else {
                 // mark it as dropped if it's too old
-                yield effects_1.put(actions_1.updateTransactionStatus(tx.hash, types_1.TransactionStatus.DROPPED));
+                yield (0, effects_1.put)((0, actions_1.updateTransactionStatus)(tx.hash, types_1.TransactionStatus.DROPPED));
             }
         }
     }
 }
 function* handleWatchDroppedTransactions() {
-    const transactions = yield effects_1.select(selectors_1.getData);
+    const transactions = yield (0, effects_1.select)(selectors_1.getData);
     const droppedTransactions = transactions.filter(transaction => transaction.status === types_1.TransactionStatus.DROPPED &&
         transaction.nonce != null);
     for (const tx of droppedTransactions) {
         if (!watchDroppedIndex[tx.hash]) {
-            yield effects_1.fork(handleReplaceTransactionRequest, actions_1.replaceTransactionRequest(tx.hash, tx.nonce));
+            yield (0, effects_1.fork)(handleReplaceTransactionRequest, (0, actions_1.replaceTransactionRequest)(tx.hash, tx.nonce));
         }
     }
 }
 function* handleWatchRevertedTransaction(action) {
     const { hash } = action.payload;
-    const txInState = yield effects_1.select(state => selectors_1.getTransaction(state, hash));
-    const address = yield effects_1.select(state => selectors_2.getAddress(state));
+    const txInState = yield (0, effects_1.select)(state => (0, selectors_1.getTransaction)(state, hash));
+    const address = yield (0, effects_1.select)(state => (0, selectors_2.getAddress)(state));
     do {
-        yield effects_1.delay(TRANSACTION_FETCH_DELAY);
-        const txInNetwork = yield effects_1.call(() => txUtils_1.getTransaction(address, txInState.chainId, hash));
+        yield (0, effects_1.delay)(TRANSACTION_FETCH_DELAY);
+        const txInNetwork = yield (0, effects_1.call)(() => (0, txUtils_1.getTransaction)(address, txInState.chainId, hash));
         if (txInNetwork != null &&
             txInNetwork.status === types_1.TransactionStatus.CONFIRMED) {
-            yield effects_1.put(actions_1.fixRevertedTransaction(hash));
+            yield (0, effects_1.put)((0, actions_1.fixRevertedTransaction)(hash));
             return;
         }
         else if (txInNetwork == null && txInState.nonce) {
-            yield effects_1.put(actions_1.replaceTransactionRequest(hash, txInState.nonce));
+            yield (0, effects_1.put)((0, actions_1.replaceTransactionRequest)(hash, txInState.nonce));
             return;
         }
     } while (!isExpired(txInState, REVERTED_TRANSACTION_THRESHOLD));
 }
 function* handleConnectWalletSuccess(_) {
-    yield effects_1.put(actions_1.watchPendingTransactions());
-    yield effects_1.put(actions_1.watchDroppedTransactions());
+    yield (0, effects_1.put)((0, actions_1.watchPendingTransactions)());
+    yield (0, effects_1.put)((0, actions_1.watchDroppedTransactions)());
     // find reverted transactions and watch the latest ones
-    const address = yield effects_1.select(state => selectors_2.getAddress(state));
-    const transactions = yield effects_1.select(state => selectors_1.getTransactions(state, address));
+    const address = yield (0, effects_1.select)(state => (0, selectors_2.getAddress)(state));
+    const transactions = yield (0, effects_1.select)(state => (0, selectors_1.getTransactions)(state, address));
     const revertedTransactions = transactions.filter(transaction => transaction.status === types_1.TransactionStatus.REVERTED &&
         !isExpired(transaction, REVERTED_TRANSACTION_THRESHOLD));
     for (const transaction of revertedTransactions) {
-        yield effects_1.put(actions_1.watchRevertedTransaction(transaction.hash));
+        yield (0, effects_1.put)((0, actions_1.watchRevertedTransaction)(transaction.hash));
     }
 }
 //# sourceMappingURL=sagas.js.map

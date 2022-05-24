@@ -1,6 +1,9 @@
 import * as React from 'react'
 
-import { Footer as FooterComponent, FooterI18N } from '@beland/uikit/dist/components/Footer/Footer'
+import {
+  Footer as FooterComponent,
+  FooterI18N
+} from '@beland/uikit/dist/components/Footer/Footer'
 
 import { FooterProps } from './Footer.types'
 import { T } from '../../modules/translation/utils'
@@ -11,14 +14,8 @@ export default class Footer extends React.PureComponent<FooterProps> {
       return undefined
     }
     return {
-      dropdown: {
-        en: <T id="@dapps.footer.dropdown.en" />,
-        es: <T id="@dapps.footer.dropdown.es" />,
-        fr: <T id="@dapps.footer.dropdown.fr" />,
-        ja: <T id="@dapps.footer.dropdown.ja" />,
-        zh: <T id="@dapps.footer.dropdown.zh" />,
-        ko: <T id="@dapps.footer.dropdown.ko" />
-      },
+      content: <T id="@dapps.footer.content" />,
+      title: <T id="@dapps.footer.title" />,
       links: {
         home: <T id="@dapps.footer.links.home" />,
         privacy: <T id="@dapps.footer.links.privacy" />,

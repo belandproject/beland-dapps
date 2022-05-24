@@ -8,13 +8,13 @@ const selectors_1 = require("../../modules/profile/selectors");
 const actions_1 = require("../../modules/profile/actions");
 const Profile_1 = __importDefault(require("./Profile"));
 const mapState = (state, ownProps) => {
-    const profile = selectors_1.getData(state)[ownProps.address];
+    const profile = (0, selectors_1.getData)(state)[ownProps.address];
     return {
         avatar: profile ? profile.avatars[0] : null
     };
 };
 const mapDispatch = (dispatch) => ({
-    onLoadProfile: address => dispatch(actions_1.loadProfileRequest(address))
+    onLoadProfile: address => dispatch((0, actions_1.loadProfileRequest)(address))
 });
-exports.default = react_redux_1.connect(mapState, mapDispatch)(Profile_1.default);
+exports.default = (0, react_redux_1.connect)(mapState, mapDispatch)(Profile_1.default);
 //# sourceMappingURL=Profile.container.js.map

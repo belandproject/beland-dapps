@@ -5,7 +5,7 @@ const getState = state => state.modal;
 exports.getState = getState;
 const getOpenModals = state => {
     const openModals = {};
-    const modals = exports.getState(state);
+    const modals = (0, exports.getState)(state);
     for (const name in modals) {
         const modal = modals[name];
         if (modal.open) {

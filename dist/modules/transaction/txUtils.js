@@ -16,7 +16,7 @@ const eth_2 = require("../../lib/eth");
 const types_1 = require("./types");
 function getTransaction(address, chainId, hash) {
     return __awaiter(this, void 0, void 0, function* () {
-        const provider = yield eth_2.getNetworkProvider(chainId);
+        const provider = yield (0, eth_2.getNetworkProvider)(chainId);
         if (!provider)
             return null;
         const eth = new eth_1.Eth(provider);

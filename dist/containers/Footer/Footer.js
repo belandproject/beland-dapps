@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -30,14 +34,8 @@ class Footer extends React.PureComponent {
                 return undefined;
             }
             return {
-                dropdown: {
-                    en: React.createElement(utils_1.T, { id: "@dapps.footer.dropdown.en" }),
-                    es: React.createElement(utils_1.T, { id: "@dapps.footer.dropdown.es" }),
-                    fr: React.createElement(utils_1.T, { id: "@dapps.footer.dropdown.fr" }),
-                    ja: React.createElement(utils_1.T, { id: "@dapps.footer.dropdown.ja" }),
-                    zh: React.createElement(utils_1.T, { id: "@dapps.footer.dropdown.zh" }),
-                    ko: React.createElement(utils_1.T, { id: "@dapps.footer.dropdown.ko" })
-                },
+                content: React.createElement(utils_1.T, { id: "@dapps.footer.content" }),
+                title: React.createElement(utils_1.T, { id: "@dapps.footer.title" }),
                 links: {
                     home: React.createElement(utils_1.T, { id: "@dapps.footer.links.home" }),
                     privacy: React.createElement(utils_1.T, { id: "@dapps.footer.links.privacy" }),
