@@ -1,17 +1,16 @@
-import { ContractData, sendMetaTransaction } from 'decentraland-transactions'
+import { ContractData } from '@beland/transactions'
 import { providers } from 'ethers'
 import { getConnectedProvider, getNetworkProvider } from '../../lib/eth'
 import {
   mockedContract,
   buildMockedNetworkProvider
 } from '../../tests/transactions'
-import { getTransactionsApiUrl, sendTransaction } from './utils'
+import { sendTransaction } from './utils'
 
 jest.mock('../../lib/eth')
-jest.mock('decentraland-transactions')
+jest.mock('@beland/transactions')
 const mockedGetConnectedProvider: jest.Mock<typeof getConnectedProvider> = getConnectedProvider as any
 const mockedGetNetworkProvider: jest.Mock<typeof getNetworkProvider> = getNetworkProvider as any
-const mockedSendMetaTransaction: jest.Mock<typeof sendMetaTransaction> = sendMetaTransaction as any
 
 type MockedProvider = {
   request: jest.Mock
@@ -192,128 +191,6 @@ describe('when sending a transaction', () => {
             }
           ]
         })
-      })
-    })
-  })
-
-  describe("and the current chain id is not the same as the contract's chain id", () => {
-    describe('and the meta transaction fails to be sent', () => {
-      beforeEach(() => {
-        error = new Error('Meta transaction failed to be sent')
-        const networkProvider = buildMockedNetworkProvider()
-        const connectedNetworkProvider = buildMockedNetworkProvider({
-          ethChainId: Promise.resolve('0x89')
-        })
-
-        mockedGetNetworkProvider.mockResolvedValue(networkProvider as never)
-        mockedGetConnectedProvider.mockResolvedValue(
-          connectedNetworkProvider as never
-        )
-        mockedSendMetaTransaction.mockRejectedValueOnce(error as never)
-      })
-
-      it('should throw an error signaling the failure of the meta transaction', () => {
-        return expect(
-          sendTransaction(
-            contract,
-            'transferFrom',
-            '0xeDaE96F7739aF8A7fB16E2a888C1E578E1328299',
-            '0x7DbBDF7C7c4c4d408cd43660D9a1f86B53109F5f',
-            20
-          )
-        ).rejects.toThrow(error.message)
-      })
-    })
-
-    describe('and the meta transaction is sent successfully', () => {
-      let networkProvider: MockedProvider
-      let connectedNetworkProvider: MockedProvider
-
-      beforeEach(() => {
-        networkProvider = buildMockedNetworkProvider()
-        connectedNetworkProvider = buildMockedNetworkProvider({
-          ethChainId: Promise.resolve('0x89')
-        })
-
-        mockedGetNetworkProvider.mockResolvedValue(networkProvider as never)
-        mockedGetConnectedProvider.mockResolvedValue(
-          connectedNetworkProvider as never
-        )
-        mockedSendMetaTransaction.mockResolvedValueOnce(
-          transactionHash as never
-        )
-      })
-
-      it('should resolve with the transaction hash', () => {
-        return expect(
-          sendTransaction(
-            contract,
-            'transferFrom',
-            '0xeDaE96F7739aF8A7fB16E2a888C1E578E1328299',
-            '0x7DbBDF7C7c4c4d408cd43660D9a1f86B53109F5f',
-            20
-          )
-        ).resolves.toEqual(transactionHash)
-      })
-
-      it('should have sent the meta transaction with all the required parameters', async () => {
-        await sendTransaction(
-          contract,
-          'transferFrom',
-          '0xeDaE96F7739aF8A7fB16E2a888C1E578E1328299',
-          '0x7DbBDF7C7c4c4d408cd43660D9a1f86B53109F5f',
-          20
-        )
-        expect(sendMetaTransaction).toHaveBeenCalledWith(
-          connectedNetworkProvider,
-          expect.any(providers.Web3Provider),
-          '0x23b872dd000000000000000000000000edae96f7739af8a7fb16e2a888c1e578e13282990000000000000000000000007dbbdf7c7c4c4d408cd43660d9a1f86b53109f5f0000000000000000000000000000000000000000000000000000000000000014',
-          mockedContract,
-          {
-            serverURL: getTransactionsApiUrl()
-          }
-        )
-      })
-    })
-  })
-
-  describe("and the transaction to be executed doesn't have parameters", () => {
-    describe('and the meta transaction is sent successfully', () => {
-      let networkProvider: MockedProvider
-      let connectedNetworkProvider: MockedProvider
-
-      beforeEach(() => {
-        networkProvider = buildMockedNetworkProvider()
-        connectedNetworkProvider = buildMockedNetworkProvider({
-          ethChainId: Promise.resolve('0x89')
-        })
-
-        mockedGetNetworkProvider.mockResolvedValue(networkProvider as never)
-        mockedGetConnectedProvider.mockResolvedValue(
-          connectedNetworkProvider as never
-        )
-        mockedSendMetaTransaction.mockResolvedValueOnce(
-          transactionHash as never
-        )
-      })
-
-      it('should resolve with the transaction hash', () => {
-        return expect(sendTransaction(contract, 'approve')).resolves.toEqual(
-          transactionHash
-        )
-      })
-
-      it('should have sent the meta transaction with all the required parameters', async () => {
-        await sendTransaction(contract, 'approve')
-        expect(sendMetaTransaction).toHaveBeenCalledWith(
-          connectedNetworkProvider,
-          expect.any(providers.Web3Provider),
-          '0x12424e3f',
-          mockedContract,
-          {
-            serverURL: getTransactionsApiUrl()
-          }
-        )
       })
     })
   })

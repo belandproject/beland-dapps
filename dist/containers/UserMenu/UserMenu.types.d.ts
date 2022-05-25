@@ -4,7 +4,7 @@ import { ConnectWalletRequestAction, DisconnectWalletAction } from '../../module
 export declare type Props = UserMenuProps & {
     hasTranslations: boolean;
 };
-export declare type MapStateProps = Pick<Props, 'isSignedIn' | 'isSigningIn' | 'address' | 'avatar' | 'manaBalances' | 'hasActivity' | 'hasTranslations'>;
+export declare type MapStateProps = Pick<Props, 'isSignedIn' | 'isSigningIn' | 'address' | 'avatar' | 'beanBalances' | 'hasActivity' | 'hasTranslations'>;
 export declare type MapDispatchProps = Pick<Props, 'onSignOut'>;
 export declare type MapDispatch = Dispatch<ConnectWalletRequestAction | DisconnectWalletAction>;
 export declare type OwnProps = Partial<Props>;

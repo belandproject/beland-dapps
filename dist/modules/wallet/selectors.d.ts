@@ -16,6 +16,6 @@ export declare const getNetworks: (state: any) => import("./types").Networks | u
 export declare const hasAcceptedNetworkPartialSupport: (state: any) => boolean;
 export declare const getAppChainId: (state: any) => ChainId;
 /**
- * @deprecated This method is deprecated, it only returns the MANA balance on Ethereum, use getNetworks() to get the MANA balances on all the networks.
+ * @deprecated This method is deprecated, it only returns the bean balance on Ethereum, use getNetworks() to get the bean balances on all the networks.
  */
-export declare const getMana: (state: any) => number | undefined;
+export declare const getBean: (state: any) => number | undefined;

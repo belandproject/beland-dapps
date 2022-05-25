@@ -4,8 +4,7 @@ import MetaTransactionError from '../../../containers/MetaTransactionError'
 import { T, t } from '../../translation/utils'
 import { Toast } from '../types'
 
-const transactionsInPolygonDocs =
-  'https://docs.decentraland.org/blockchain-integration/transactions-in-polygon/'
+const transactionsInPolygonDocs = ''
 
 export function getContractAccountErrorToast(): Omit<Toast, 'id'> {
   return {

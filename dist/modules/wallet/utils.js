@@ -13,12 +13,22 @@ exports.getAddEthereumChainParameters = exports.sendTransaction = exports.transa
 const events_1 = require("events");
 const ethers_1 = require("ethers");
 const eth_1 = require("web3x/eth");
+const transactions_1 = require("@beland/transactions");
 const chain_id_1 = require("@beland/schemas/dist/dapps/chain-id");
 const eth_2 = require("../../lib/eth");
 const chainConfiguration_1 = require("../../lib/chainConfiguration");
-function fetchBeanBalance(_chainId, _address) {
+function fetchBeanBalance(chainId, address) {
     return __awaiter(this, void 0, void 0, function* () {
-        return 0;
+        try {
+            const provider = yield (0, eth_2.getNetworkProvider)(chainId);
+            const contract = (0, transactions_1.getContract)(transactions_1.ContractName.BEAN, chainId);
+            const bean = new ethers_1.Contract(contract.address, contract.abi, new ethers_1.providers.Web3Provider(provider));
+            const balance = yield bean.balanceOf(address);
+            return parseFloat(ethers_1.utils.formatEther(balance));
+        }
+        catch (error) {
+            return 0;
+        }
     });
 }
 exports.fetchBeanBalance = fetchBeanBalance;
@@ -45,7 +55,7 @@ function buildWallet() {
             const networkChainId = expectedChainConfig.networkMapping[network];
             networks[network] = {
                 chainId: networkChainId,
-                mana: yield fetchBeanBalance(networkChainId, address)
+                bean: yield fetchBeanBalance(networkChainId, address)
             };
         }
         return {
@@ -91,6 +101,7 @@ function sendTransaction(...args) {
                 : contractInstance.populateTransaction[contractMethodNameOrGetPopulatedTransaction](...contractArguments));
             const signer = targetNetworkProvider.getSigner();
             const tx = yield signer.sendTransaction(unsignedTx);
+            yield tx.wait();
             exports.transactionEvents.emit(TransactionEventType.SUCCESS, { txHash: tx.hash });
             return tx.hash;
         }

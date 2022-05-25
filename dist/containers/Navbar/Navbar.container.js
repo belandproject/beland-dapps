@@ -10,7 +10,7 @@ const actions_1 = require("../../modules/wallet/actions");
 const Navbar_1 = __importDefault(require("./Navbar"));
 const mapState = (state) => ({
     chainId: (0, selectors_1.getChainId)(state),
-    mana: (0, selectors_1.getMana)(state),
+    bean: (0, selectors_1.getBean)(state),
     address: (0, selectors_1.getAddress)(state),
     isConnected: (0, selectors_1.isConnected)(state),
     isConnecting: (0, selectors_1.isConnecting)(state),

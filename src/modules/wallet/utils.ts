@@ -1,8 +1,8 @@
 import { EventEmitter } from 'events'
-import { PopulatedTransaction, Contract, providers } from 'ethers'
+import { PopulatedTransaction, Contract, providers, utils } from 'ethers'
 import { Eth } from 'web3x/eth'
 import { Address } from 'web3x/address'
-import { ContractData } from '@beland/transactions'
+import { ContractData, ContractName, getContract } from '@beland/transactions'
 import { ChainId, getChainName } from '@beland/schemas/dist/dapps/chain-id'
 import {
   getConnectedProvider,
@@ -13,8 +13,20 @@ import {
 import { getChainConfiguration } from '../../lib/chainConfiguration'
 import { AddEthereumChainParameters, Networks, Wallet } from './types'
 
-export async function fetchBeanBalance(_chainId: ChainId, _address: string) {
-  return 0
+export async function fetchBeanBalance(chainId: ChainId, address: string) {
+  try {
+    const provider = await getNetworkProvider(chainId)
+    const contract = getContract(ContractName.BEAN, chainId)
+    const bean = new Contract(
+      contract.address,
+      contract.abi,
+      new providers.Web3Provider(provider)
+    )
+    const balance = await bean.balanceOf(address)
+    return parseFloat(utils.formatEther(balance))
+  } catch (error) {
+    return 0
+  }
 }
 
 export async function buildWallet(): Promise<Wallet> {
@@ -44,7 +56,7 @@ export async function buildWallet(): Promise<Wallet> {
     const networkChainId = expectedChainConfig.networkMapping[network]
     networks[network] = {
       chainId: networkChainId,
-      mana: await fetchBeanBalance(networkChainId, address)
+      bean: await fetchBeanBalance(networkChainId, address)
     }
   }
 

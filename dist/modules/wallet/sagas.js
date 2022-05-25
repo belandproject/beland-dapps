@@ -175,9 +175,6 @@ function createWalletSaga(options) {
     else {
         throw new Error(`Invalid Chain id ${options.CHAIN_ID}. Valid options are ${Object.values(chain_id_1.ChainId)}`);
     }
-    if (options.MANA_ADDRESS) {
-        console.warn('Deprecated notice: the MANA_ADDRESS option on `createWalletSaga` has been deprecated and will be removed in future version.');
-    }
     if (options.POLL_INTERVAL) {
         POLL_INTERVAL = options.POLL_INTERVAL;
     }

@@ -4,7 +4,7 @@ import { PopulatedTransaction, Contract, providers } from 'ethers';
 import { ContractData } from '@beland/transactions';
 import { ChainId } from '@beland/schemas/dist/dapps/chain-id';
 import { AddEthereumChainParameters, Wallet } from './types';
-export declare function fetchBeanBalance(_chainId: ChainId, _address: string): Promise<number>;
+export declare function fetchBeanBalance(chainId: ChainId, address: string): Promise<number>;
 export declare function buildWallet(): Promise<Wallet>;
 export declare function getTargetNetworkProvider(chainId: ChainId): Promise<providers.Web3Provider>;
 export declare enum TransactionEventType {

@@ -38,12 +38,12 @@ export const getAppChainId = (state: any) =>
   getState(state).appChainId as ChainId
 
 /**
- * @deprecated This method is deprecated, it only returns the MANA balance on Ethereum, use getNetworks() to get the MANA balances on all the networks.
+ * @deprecated This method is deprecated, it only returns the bean balance on Ethereum, use getNetworks() to get the bean balances on all the networks.
  */
-export const getMana = (state: any) => {
+export const getBean = (state: any) => {
   if (!isConnected(state)) {
     return undefined
   }
   const networks = getNetworks(state)!
-  return networks[Network.ETHEREUM].mana
+  return networks[Network.KAI].bean
 }

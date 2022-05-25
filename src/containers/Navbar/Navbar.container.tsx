@@ -3,7 +3,7 @@ import {
   isConnected,
   isConnecting,
   getAddress,
-  getMana,
+  getBean,
   getChainId,
   hasAcceptedNetworkPartialSupport
 } from '../../modules/wallet/selectors'
@@ -19,7 +19,7 @@ import Navbar from './Navbar'
 
 const mapState = (state: any): MapStateProps => ({
   chainId: getChainId(state),
-  mana: getMana(state),
+  bean: getBean(state),
   address: getAddress(state),
   isConnected: isConnected(state),
   isConnecting: isConnecting(state),

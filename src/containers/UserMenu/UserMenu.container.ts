@@ -26,20 +26,14 @@ const mapState = (state: any): MapStateProps => {
   const profile = getProfiles(state)[address!]
   const networks = getNetworks(state)
 
-  const manaBalances: Props['manaBalances'] = {}
+  const beanBalances: Props['beanBalances'] = {}
   if (isSignedIn) {
-    const networkList = Object.values(Network) as Network[]
-    for (const network of networkList) {
-      const networkData = networks![network]
-      if (networkData) {
-        manaBalances[network] = networks![network].mana
-      }
-    }
+    beanBalances[Network.KAI] = networks?.KAI.bean
   }
 
   return {
     address,
-    manaBalances,
+    beanBalances,
     avatar: profile ? profile.avatars[0] : undefined,
     isSignedIn,
     isSigningIn: isConnecting(state),
@@ -64,8 +58,4 @@ const mergeProps = (
   ...ownProps
 })
 
-export default connect(
-  mapState,
-  mapDispatch,
-  mergeProps
-)(UserMenu)
+export default connect(mapState, mapDispatch, mergeProps)(UserMenu)

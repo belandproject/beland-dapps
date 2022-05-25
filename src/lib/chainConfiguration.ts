@@ -2,20 +2,7 @@ import { ChainId } from '@beland/schemas/dist/dapps/chain-id'
 import { Network } from '@beland/schemas/dist/dapps/network'
 import { RPC_URLS } from '@beland/connect/dist/connectors/NetworkConnector'
 
-export const MANA_GRAPH_BY_CHAIN_ID = {
-  [ChainId.ETHEREUM_MAINNET]:
-    'https://api.thegraph.com/subgraphs/name/decentraland/mana-ethereum-mainnet',
-  [ChainId.ETHEREUM_ROPSTEN]:
-    'https://api.thegraph.com/subgraphs/name/decentraland/mana-ethereum-ropsten',
-  [ChainId.ETHEREUM_GOERLI]:
-    'https://api.thegraph.com/subgraphs/name/decentraland/mana-ethereum-goerli',
-  [ChainId.ETHEREUM_RINKEBY]:
-    'https://api.thegraph.com/subgraphs/name/decentraland/mana-ethereum-rinkeby',
-  [ChainId.MATIC_MAINNET]:
-    'https://api.thegraph.com/subgraphs/name/decentraland/mana-matic-mainnet',
-  [ChainId.MATIC_MUMBAI]:
-    'https://api.thegraph.com/subgraphs/name/decentraland/mana-matic-mumbai'
-}
+export const BEAN_GRAPH_BY_CHAIN_ID = {}
 
 const NETWORK_MAPPING_BY_CHAIN_ID = {
   [ChainId.ETHEREUM_MAINNET]: {
@@ -61,7 +48,7 @@ const NETWORK_BY_CHAIN_ID: Record<ChainId, Network> = {
 
 type ChainConfiguration = {
   network: Network
-  manaGraphURL: string
+  beanGraphURL: string
   rpcURL: string
   networkMapping: Record<Network, ChainId>
 }
@@ -69,7 +56,7 @@ type ChainConfiguration = {
 export function getChainConfiguration(chainId: ChainId): ChainConfiguration {
   return {
     network: NETWORK_BY_CHAIN_ID[chainId],
-    manaGraphURL: MANA_GRAPH_BY_CHAIN_ID[chainId],
+    beanGraphURL: BEAN_GRAPH_BY_CHAIN_ID[chainId],
     rpcURL: RPC_URLS[chainId],
     networkMapping: NETWORK_MAPPING_BY_CHAIN_ID[chainId]
   }

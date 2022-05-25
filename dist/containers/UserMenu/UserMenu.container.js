@@ -17,19 +17,13 @@ const mapState = (state) => {
     const address = (0, selectors_1.getAddress)(state);
     const profile = (0, selectors_2.getData)(state)[address];
     const networks = (0, selectors_1.getNetworks)(state);
-    const manaBalances = {};
+    const beanBalances = {};
     if (isSignedIn) {
-        const networkList = Object.values(network_1.Network);
-        for (const network of networkList) {
-            const networkData = networks[network];
-            if (networkData) {
-                manaBalances[network] = networks[network].mana;
-            }
-        }
+        beanBalances[network_1.Network.KAI] = networks === null || networks === void 0 ? void 0 : networks.KAI.bean;
     }
     return {
         address,
-        manaBalances,
+        beanBalances,
         avatar: profile ? profile.avatars[0] : undefined,
         isSignedIn,
         isSigningIn: (0, selectors_1.isConnecting)(state),

@@ -6,7 +6,7 @@ import { ProviderType } from '@beland/schemas/dist/dapps/provider-type'
 export { Provider, ProviderType }
 
 export type NetworkData = {
-  mana: number
+  bean: number
   chainId: ChainId
 }
 export type Networks = Record<Network, NetworkData>
@@ -20,7 +20,7 @@ export interface Wallet {
 }
 
 export interface CreateWalletOptions {
-  MANA_ADDRESS?: string
+  BEAN_ADDRESS?: string
   CHAIN_ID: string | number
   TRANSACTIONS_API_URL?: string
   POLL_INTERVAL?: number

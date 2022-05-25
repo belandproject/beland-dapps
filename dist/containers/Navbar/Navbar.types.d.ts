@@ -10,6 +10,6 @@ export declare type NavbarProps = NavbarComponentProps & {
     hasAcceptedNetworkPartialSupport: boolean;
     onAcceptNetworkPartialSupport: typeof acceptNetworkPartialSupport;
 };
-export declare type MapStateProps = Pick<NavbarProps, 'mana' | 'address' | 'isConnected' | 'isConnecting' | 'hasTranslations' | 'chainId' | 'hasAcceptedNetworkPartialSupport'>;
+export declare type MapStateProps = Pick<NavbarProps, 'bean' | 'address' | 'isConnected' | 'isConnecting' | 'hasTranslations' | 'chainId' | 'hasAcceptedNetworkPartialSupport'>;
 export declare type MapDispatchProps = Pick<NavbarProps, 'onSwitchNetwork' | 'onSignOut' | 'onAcceptNetworkPartialSupport'>;
 export declare type MapDispatch = Dispatch<SwitchNetworkRequestAction | AcceptNetworkPartialSupportAction>;

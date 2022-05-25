@@ -20,7 +20,7 @@ export type NavbarProps = NavbarComponentProps & {
 
 export type MapStateProps = Pick<
   NavbarProps,
-  | 'mana'
+  | 'bean'
   | 'address'
   | 'isConnected'
   | 'isConnecting'

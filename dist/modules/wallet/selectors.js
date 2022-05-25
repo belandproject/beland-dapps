@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMana = exports.getAppChainId = exports.hasAcceptedNetworkPartialSupport = exports.getNetworks = exports.getNetwork = exports.getProviderType = exports.getChainId = exports.getAddress = exports.isEnabling = exports.isConnecting = exports.isConnected = exports.getError = exports.getLoading = exports.getData = exports.getState = void 0;
+exports.getBean = exports.getAppChainId = exports.hasAcceptedNetworkPartialSupport = exports.getNetworks = exports.getNetwork = exports.getProviderType = exports.getChainId = exports.getAddress = exports.isEnabling = exports.isConnecting = exports.isConnected = exports.getError = exports.getLoading = exports.getData = exports.getState = void 0;
 const network_1 = require("@beland/schemas/dist/dapps/network");
 const selectors_1 = require("../loading/selectors");
 const actions_1 = require("./actions");
@@ -34,14 +34,14 @@ exports.hasAcceptedNetworkPartialSupport = hasAcceptedNetworkPartialSupport;
 const getAppChainId = (state) => (0, exports.getState)(state).appChainId;
 exports.getAppChainId = getAppChainId;
 /**
- * @deprecated This method is deprecated, it only returns the MANA balance on Ethereum, use getNetworks() to get the MANA balances on all the networks.
+ * @deprecated This method is deprecated, it only returns the bean balance on Ethereum, use getNetworks() to get the bean balances on all the networks.
  */
-const getMana = (state) => {
+const getBean = (state) => {
     if (!(0, exports.isConnected)(state)) {
         return undefined;
     }
     const networks = (0, exports.getNetworks)(state);
-    return networks[network_1.Network.ETHEREUM].mana;
+    return networks[network_1.Network.KAI].bean;
 };
-exports.getMana = getMana;
+exports.getBean = getBean;
 //# sourceMappingURL=selectors.js.map
