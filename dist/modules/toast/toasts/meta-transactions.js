@@ -8,7 +8,7 @@ const react_1 = __importDefault(require("react"));
 const Toast_1 = require("@beland/uikit/dist/components/Toast/Toast");
 const MetaTransactionError_1 = __importDefault(require("../../../containers/MetaTransactionError"));
 const utils_1 = require("../../translation/utils");
-const transactionsInPolygonDocs = 'https://docs.decentraland.org/blockchain-integration/transactions-in-polygon/';
+const transactionsInPolygonDocs = '';
 function getContractAccountErrorToast() {
     return {
         type: Toast_1.ToastType.ERROR,
